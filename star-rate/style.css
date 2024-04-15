@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind&display=swap');
 ::selection {
   color: white;
-  background-color: #6fa9e3;
+  background-color:  #5a2d14;;
 }
 body {
   padding: 0;
@@ -14,6 +14,12 @@ body {
   align-items: center;
   height: 100vh;
 }
+
+/* font size for headings and prompts */
+h1, h2, p {
+  font-size: 24px; /* Adjust the font size as needed */
+}
+
 .stars {
   display: flex;
   justify-content: center;
@@ -25,6 +31,13 @@ body {
   cursor: pointer;
   transition-duration: 0.2s;
 }
+
+/* Update star icon size */
+.stars button svg {
+  width: 32px; /* Adjust the width and height as needed */
+  height: 32px;
+}
+
 textarea {
   width: 95%;
   height: 9.9rem;
@@ -37,15 +50,15 @@ textarea {
   transition-duration: 0.1s;
 }
 .submit {
-  background-image: linear-gradient(135deg, #6fa9e3, #0b79e6);
+  background-color: #5a2d14; /* Dark brown */
   padding: 20px;
   border-radius: 10px;
   color: white;
-  fill: white;
   transition-duration: 0.25s;
   border: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width: 98%;
+  width: 50%;
+  font-size: 24px; /* Adjust the font size as needed */
 }
 .submit:hover {
   border: none;
@@ -53,10 +66,10 @@ textarea {
 .submit:active {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset, 0 6px 20px 0 rgba(0, 0, 0, 0.19) inset;
   background-image: none;
-  background-color: white;
+  background-color:  #5a2d14;
   border: none;
-  fill: #0b79e6;
-  color: #0b79e6;
+  fill:  #5a2d14;
+  color: #5a2d14;
 }
 .submit h2 {
   font-family: Hind, sans-serif;
@@ -65,16 +78,16 @@ textarea {
   width: 30px;
 }
 ::-webkit-scrollbar-track {
-  background: #cccccc;
+  background:  #5a2d14;
 }
 ::-webkit-scrollbar-thumb {
-  background: #6fa9e3;
+  background:  #5a2d14;
   border: 4px solid #cccccc;
   border-radius: 15px;
   transition-duration: 0.2s;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0b79e6;
+  background: #5a2d14;
 }
 .review-container {
   border-radius: 10px;
