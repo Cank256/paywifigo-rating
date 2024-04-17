@@ -17,7 +17,7 @@ body {
 
 /* font size for headings and prompts */
 h1, h2, p {
-  font-size: 24px; /* Adjust the font size as needed */
+  font-size: 20px; /* Adjust the font size as needed */
 }
 
 .stars {
@@ -32,10 +32,14 @@ h1, h2, p {
   transition-duration: 0.2s;
 }
 
+#top {
+  text-align: center;
+}
+
 /* Update star icon size */
 .stars button svg {
-  width: 32px; /* Adjust the width and height as needed */
-  height: 32px;
+  width: 50px; /* Adjust the width and height as needed */
+  height: 50px;
 }
 
 textarea {
@@ -53,12 +57,15 @@ textarea {
   background-color: #5a2d14; /* Dark brown */
   padding: 20px;
   border-radius: 10px;
-  color: white;
+  color: #ffc107;
   transition-duration: 0.25s;
   border: none;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(172, 116, 25, 0.2), 0 6px 20px 0 rgba(184, 115, 26, 0.19);
   width: 50%;
-  font-size: 24px; /* Adjust the font size as needed */
+  height: 15px;
+  font-size: 20px; /* Adjust the font size as needed */
+  align-items: center;
+  justify-content: center;
 }
 .submit:hover {
   border: none;
@@ -89,12 +96,13 @@ textarea {
 ::-webkit-scrollbar-thumb:hover {
   background: #5a2d14;
 }
-.review-container {
+.review-container h1 {
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset, 0 6px 20px 0 rgba(0, 0, 0, 0.19) inset;
   padding: 10px;
   width: 93%;
   text-align: left;
+  color: #ffc107;
 }
 .vertical-padding {
   padding: 5px;
@@ -112,12 +120,12 @@ button p {
   border-radius: 10px;
   background: none;
   border: none;
-  color: #0b79e6;
+  color: #ffc107;
   opacity: 0.6;
   transition-duration: 0.2s;
 }
 .goto:hover {
-  background: rgba(11, 121, 230, 0.25);
+  background: rgba(212, 186, 39, 0.25);
 }
 .goto:active {
   opacity: 1;
