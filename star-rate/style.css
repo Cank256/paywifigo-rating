@@ -62,7 +62,7 @@ textarea {
   border: none;
   box-shadow: 0 4px 8px 0 rgba(172, 116, 25, 0.2), 0 6px 20px 0 rgba(184, 115, 26, 0.19);
   width: 50%;
-  height: 15px;
+  height: 40%;
   font-size: 20px; /* Adjust the font size as needed */
   align-items: center;
   justify-content: center;
@@ -118,14 +118,14 @@ button p {
 }
 .goto {
   border-radius: 10px;
-  background: none;
+  background: rgba(59, 108, 17, 0.25);
   border: none;
-  color: #ffc107;
+  color: #0c0804;
   opacity: 0.6;
   transition-duration: 0.2s;
 }
 .goto:hover {
-  background: rgba(212, 186, 39, 0.25);
+  background: rgba(2, 8, 141, 0.25);
 }
 .goto:active {
   opacity: 1;
