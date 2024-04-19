@@ -12,7 +12,8 @@
 <div class="body">
     <div class="main">
         <div class="input">
-            <h1 id="top">Review Our Data Packages</h1>
+            <h1 id="top"><img src="wifigo.png" height="128px" width="128px" alt="Pay-WiFi-Go Logo" > Review Our Data Packages</h1>
+            <h1 id="top-data">You recently subscribed to {data pack}, how can we improve our service</h1>
             <div class="stars">
                 <button class="star one" id="one" onclick="on()">
                     <svg height="1em" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
@@ -52,7 +53,11 @@
 
                 <textarea maxlength="240" minlength="15" name="review"
                           placeholder="What was your experience?"></textarea>
-                <button class="submit" type="submit">Submit</button>
+                <div style="display: flex; padding: 2px; margin: 2px">
+                    <button class="decline" type="submit">No thanks</button>
+                    <button class="submit" type="submit">Submit</button>
+                </div>
+
             </form>
             <div class="vertical-padding">
             </div>

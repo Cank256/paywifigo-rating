@@ -35,6 +35,9 @@ h1, h2, p {
 #top {
   text-align: center;
 }
+#top-data {
+  text-align: center;
+}
 
 /* Update star icon size */
 .stars button svg {
@@ -48,6 +51,7 @@ textarea {
   resize: vertical;
   border-radius: 10px;
   border: none;
+  font-size: 30px;
   padding: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset, 0 6px 20px 0 rgba(0, 0, 0, 0.19) inset;
   font-family: Hind, sans-serif;
@@ -81,6 +85,36 @@ textarea {
 .submit h2 {
   font-family: Hind, sans-serif;
 }
+
+.decline {
+  /*background-color: #5a2d14; !* Dark brown *!*/
+  padding: 20px;
+  border-radius: 10px;
+  color: #0c0b06;
+  transition-duration: 0.25s;
+  border: none;
+  box-shadow: 0 4px 8px 0 rgba(172, 116, 25, 0.2), 0 6px 20px 0 rgba(184, 115, 26, 0.19);
+  width: 40%;
+  height: 40%;
+  font-size: 20px; /* Adjust the font size as needed */
+  align-items: center;
+  justify-content: center;
+}
+.decline:hover {
+  border: none;
+}
+.decline:active {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset, 0 6px 20px 0 rgba(0, 0, 0, 0.19) inset;
+  background-image: none;
+  background-color: #e70000;
+  border: none;
+  fill: #db113a;
+  color: #7d411f;
+}
+.decline h2 {
+  font-family: Hind, sans-serif;
+}
+
 ::-webkit-scrollbar {
   width: 30px;
 }
