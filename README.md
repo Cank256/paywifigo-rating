@@ -1,5 +1,7 @@
 # PayWiFiGo Package Rating 
 Project aims to capture Local hotspot performance and to gather usage feedback
+Visualize the db/Schema.png file as reference and use it to complete assigned sections.
+
 
 aims:
 1. capture user rating                                  = x
