@@ -14,8 +14,8 @@
 	--gray8: hsl(var(--hue),10%,20%);
 	--gray9: hsl(var(--hue),10%,10%);
 	--primary: hsl(var(--hue),90%,55%);
-	--secondary: hsl(253,90%,55%);
-	--tertiary: hsl(283,90%,55%);
+	--secondary: hsla(37, 84%, 15%, 0.941);
+	--tertiary: hsl(33, 30%, 39%);
 	--trans-dur: 0.3s;
 	font-size: calc(12px + (16 - 12) * (100vw - 320px) / (2560 - 320));
 }
@@ -25,7 +25,7 @@ button {
 	font: 1em/1.5 "DM Sans", sans-serif;
 }
 body {
-	background-color: var(--gray5);
+	background-color: #e7ad7e;
 	background-image: url("https://assets.codepen.io/416221/sales_bg.svg");
 	background-repeat: no-repeat;
 	background-position: center;
@@ -34,7 +34,7 @@ body {
 	height: 100vh;
 	transition:
 		background-color var(--trans-dur),
-		color var(--trans-dur);
+		color #edccb0;
 }
 strong {
 	font-weight: 500;
@@ -68,7 +68,7 @@ strong {
 	max-width: 3em;
 }
 .db__bars-cell-bar-fill {
-	background-color: var(--gray2);
+	background-color: #e7ad7e;
 	position: absolute;
 	top: 0;
 	right: -1px;
@@ -110,7 +110,7 @@ strong {
 	align-self: end;
 }
 .db__bubble {
-	background-color: var(--primary);
+	background-color: #e7ad7e;;
 	border-radius: 50%;
 	display: flex;
 	justify-content: center;
@@ -149,7 +149,7 @@ strong {
 }
 .db__cell,
 .db__select {
-	background-color: hsla(0,0%,100%,0.5);
+	background-color: #e7ad7e;
 	backdrop-filter: blur(20px);
 	box-shadow:
 		0 0 0 1px hsla(0,0%,100%,0.5) inset,
