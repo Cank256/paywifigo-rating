@@ -1,0 +1,80 @@
+.nav {
+    height: var(--header-height);
+    /*display: flex;*/
+    /*width: 100%;*/
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.1rem;
+}
+@media screen and (min-width: 767px) {
+    body {
+        margin: 0;
+    }
+    .section {
+        padding: 7rem 0 2rem;
+    }
+    .nav {
+        height: calc(var(--header-height) + 1.5rem); /* 4.5rem */
+    }
+    .nav__img {
+        display: block;
+    }
+    .nav__icon {
+        display: none;
+    }
+    .nav__name {
+        font-size: var(--normal-font-size);
+        /* display: block; */ /* Minimalist design, visible labels */
+    }
+    .nav__link:hover {
+        color: var(--first-color);
+    }
+
+    /* First design, remove if you choose the minimalist design */
+    .active-link::before {
+        content: '';
+        position: absolute;
+        bottom: -.75rem;
+        width: 4px;
+        height: 4px;
+        background-color: var(--first-color);
+        border-radius: 50%;
+    }
+
+    /* Minimalist design */
+    /* .active-link::before{
+        bottom: -.75rem;
+    } */
+}
+
+/* For large devices */
+@media screen and (min-width: 1024px) {
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.myButton {
+    box-shadow:inset 0px 1px 0px 0px #c3dae8;
+    background:linear-gradient(to bottom, #63b8ee 5%, #468ccf 100%);
+    background-color:#63b8ee;
+    border-radius:6px;
+    border:1px solid #3866a3;
+    display:inline-block;
+    cursor:pointer;
+    color:#14396a;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:3px 3px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #7cacde;
+}
+.myButton:hover {
+    background:linear-gradient(to bottom, #468ccf 5%, #63b8ee 100%);
+    background-color:#468ccf;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
