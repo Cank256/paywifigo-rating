@@ -22,7 +22,7 @@
 body,
 button {
 	color: var(--gray9);
-	font: 1em/1.5 "DM Sans", sans-serif;
+	font: 1.5em/1.5 "DM Sans", sans-serif;
 }
 body {
 	background-color: #e7ad7e;
@@ -59,7 +59,8 @@ strong {
 	width: 100%;
 }
 .db__bars-cell-bar {
-	background-image: linear-gradient(var(--primary),var(--secondary),var(--tertiary));
+	background-image: linear-gradient(hsl(52.96deg 92.43% 47.54% / 94.1%),hsl(0deg 0% 95.42% / 94.1%),hsl(11.03deg 21.28% 94.19%));
+	/*background-image: linear-gradient(var(--primary),var(--secondary),var(--tertiary));*/
 	border-radius: 0.25em;
 	margin: auto;
 	overflow: hidden;
@@ -271,8 +272,9 @@ strong {
 	display: none;
 }
 .db__progress {
-	background-image: linear-gradient(90deg,var(--primary),var(--secondary),var(--tertiary));
-	height: 0.25em;
+	background-image: linear-gradient(hsl(52.96deg 92.43% 47.54% / 94.1%),hsl(0deg 0% 95.42% / 94.1%),hsl(11.03deg 21.28% 94.19%));
+	/*background-image: linear-gradient(90deg,var(--primary),var(--secondary),var(--tertiary));*/
+	height: 1.25em;
 	margin-bottom: 1.25em;
 	overflow: hidden;
 	position: relative;
@@ -426,7 +428,8 @@ time,
 	.db__bars-cell,
 	.db__product-table th,
 	.db__top-stat {
-		color: hsla(37, 84%, 15%, 0.941);
+		color: hsl(37deg 26.05% 89.55% / 94.1%);
+		font-size: 1.5rem;
 	}
 
 	/* `:focus-visible` support */
