@@ -1,0 +1,8 @@
+h3{
+  font-family:sans-sarif;
+}
+
+.row {
+  min-height: 50vh;
+  align-items: center;
+}
