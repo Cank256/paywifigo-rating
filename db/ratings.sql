@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `ratings`
 --
 
-CREATE TABLE `ratings` (
+CREATE TABLE IF NOT EXISTS `ratings` (
   `id` int NOT NULL,
   `posted` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `cust_id` varchar(36) NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `ratings` (
   `prod_id` int NOT NULL,
   `rating` tinyint NOT NULL,
   `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `ratings`
@@ -76,11 +76,11 @@ ALTER TABLE `ratings`
 --
 -- Constraints for table `ratings`
 --
-ALTER TABLE `ratings`
-  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `billing_plans` (`bp_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`cust_id`) REFERENCES `USER_ENTITY` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `ratings_ibfk_3` FOREIGN KEY (`hotspot_to_owner_id`) REFERENCES `Hotspots_To_Owners` (`hotspot_owner_pk`);
-COMMIT;
+-- ALTER TABLE `ratings`
+  -- ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `billing_plans` (`bp_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  -- ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`cust_id`) REFERENCES `USER_ENTITY` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  -- ADD CONSTRAINT `ratings_ibfk_3` FOREIGN KEY (`hotspot_to_owner_id`) REFERENCES `Hotspots_To_Owners` (`hotspot_owner_pk`);
+-- COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
