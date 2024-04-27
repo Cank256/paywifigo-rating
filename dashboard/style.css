@@ -25,24 +25,26 @@ button {
 	font: 1.5em/1.5 "DM Sans", sans-serif;
 }
 body {
-	background-color: #e7ad7e;
+	/* background-color: #e7ad7e;
 	background-image: url("https://assets.codepen.io/416221/sales_bg.svg");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
-	background-attachment: fixed;
+	background-attachment: fixed; */
+	width: 100%;
 	height: 100vh;
-	transition:
+	/* transition:
 		background-color var(--trans-dur),
-		color #edccb0;
+		color #edccb0; */
+		
 }
 strong {
 	font-weight: 500;
 }
 .db {
 	display: grid;
-	grid-gap: 1.5em;
-	padding: 1.5em;
+	grid-gap: 0.7em;
+	padding: .5em;
 	width: 100%;
 	background-color: antiquewhite;
 }
@@ -465,13 +467,13 @@ time,
 			"f f h";
 	}
 	.db__bubble {
-		width: 16em;
-		height: 16em;
+		width: 10em;
+		height: 10em;
 		transform: translate(-50%,-50%) translate(-4em,-2em);
 	}
 	.db__bubble:nth-child(2) {
-		width: 12rem;
-		height: 12rem;
+		width: 11rem;
+		height: 11rem;
 		transform: translate(-50%,-50%) translate(6rem,-1rem);
 	}
 	.db__bubble:nth-child(3) {
