@@ -375,6 +375,14 @@ time,
 		color var(--trans-dur);
 }
 
+.zebra-stripe tr:nth-child(odd) {
+	background-color: #524411;
+  }
+
+  .db__order-item:nth-child(even) {
+	background-color: #524411;
+  }
+
 /* `:focus-visible` support */
 @supports selector(:focus-visible) {
 	.db__select:focus {
