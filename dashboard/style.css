@@ -477,8 +477,8 @@ time,
 		transform: translate(-50%,-50%) translate(6rem,-1rem);
 	}
 	.db__bubble:nth-child(3) {
-		width: 8rem;
-		height: 8rem;
+		width: 9rem;
+		height: 9rem;
 		transform: translate(-50%,-50%) translate(1rem,6rem);
 	}
 	.db__bubbles {
