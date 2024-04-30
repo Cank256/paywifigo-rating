@@ -6,7 +6,7 @@ try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
-session_start();
+if(!isset($_SESSION)) { session_start(); }
 
 if (!isset($_SESSION['user_data'])) {
     $_SESSION['referer'] = "page2.php";

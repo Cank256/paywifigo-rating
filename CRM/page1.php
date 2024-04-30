@@ -6,7 +6,7 @@ try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
-session_start();
+if(!isset($_SESSION)) { session_start(); }
 
 if (!isset($_SESSION['user_data'])) {
     header('Location: login.php');
@@ -22,7 +22,7 @@ if (isset($_SESSION['user_data'])) {
     $hotspot_owner_id = $data['hotspot_owner_id'];
 
     // Use the data as needed.
-    echo "Username: $username, Email: $hotspot_owner_id";
+    echo "<div style='background-color: black' >Username: $username, Email: $hotspot_owner_id ";
 } else {
     // The array doesn't exist in the session.
     echo "User data not found in the session.";
@@ -30,19 +30,19 @@ if (isset($_SESSION['user_data'])) {
 
 // You can access the username using $_SESSION['username'] here.
 // Add a link or button for logging out.
-echo '<a href="logout.php">Log Out</a>';
+echo '<a href="logout.php">Log Out</a></div>';
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en" >
 <head>
     <meta charset="UTF-8">
     <title>CodePen - Sales Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'><link rel="stylesheet" href="./style.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'><link rel="stylesheet" href="./style.css">
 
 </head>
-<body>
+<body >
 <!-- partial:index.partial.html -->
 <svg display="none">
     <symbol id="calendar" viewBox="0 0 24 24">
@@ -126,17 +126,22 @@ echo '<a href="logout.php">Log Out</a>';
                 </svg>
                 Export
             </button>
+
         </div>
     </div>
+
+
+
+
     <div class="db__cell">
         <h2 class="db__top-stat">Today’s Revenue</h2>
         <div class="db__progress">
             <div class="db__progress-fill" style="transform:translateX(15%)"></div>
         </div>
         <div class="db__counter">
-            <div class="db__counter-value" title="$3,330,050.90">$3.33M</div>
-            <div class="db__counter-label">
-                <strong>+15%</strong><br><small>vs yesterday</small>
+            <div id="todaysales" class="db__counter-value" title="$0,000,000.00">$0.00M</div>
+            <div class="db__counter-label-sales">
+                <strong>+00%</strong><br><small>vs yesterday</small>
             </div>
         </div>
     </div>
@@ -146,9 +151,9 @@ echo '<a href="logout.php">Log Out</a>';
             <div class="db__progress-fill" style="transform:translateX(20%)"></div>
         </div>
         <div class="db__counter">
-            <div class="db__counter-value">7,410</div>
-            <div class="db__counter-label">
-                <strong>+20%</strong><br><small>vs yesterday</small>
+            <div id="todayorders" class="db__counter-value">0,000</div>
+            <div class="db__counter-label-orders">
+                <strong>+00%</strong><br><small>vs yesterday</small>
             </div>
         </div>
     </div>
@@ -158,9 +163,9 @@ echo '<a href="logout.php">Log Out</a>';
             <div class="db__progress-fill" style="transform:translateX(42%)"></div>
         </div>
         <div class="db__counter">
-            <div class="db__counter-value">$449.40</div>
-            <div class="db__counter-label">
-                <strong>+42%</strong><br><small>vs yesterday</small>
+            <div id="averagesales" class="db__counter-value">$000.00</div>
+            <div class="db__counter-label-avg">
+                <strong>+00%</strong><br><small>vs yesterday</small>
             </div>
         </div>
     </div>
@@ -209,25 +214,25 @@ echo '<a href="logout.php">Log Out</a>';
             <div class="db__bars-cell">$1M</div>
             <div class="db__bars-cell"></div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-01">5/1</time>
+                <time datetime="2022-05-01">MON</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-02">5/2</time>
+                <time datetime="2022-05-02">TUE</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-03">5/3</time>
+                <time datetime="2022-05-03">WED</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-04">5/4</time>
+                <time datetime="2022-05-04">THU</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-05">5/5</time>
+                <time datetime="2022-05-05">FRI</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-06">5/6</time>
+                <time datetime="2022-05-06">SAT</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-07">5/7</time>
+                <time datetime="2022-05-07">SUN</time>
             </div>
         </div>
     </div>
@@ -242,7 +247,7 @@ echo '<a href="logout.php">Log Out</a>';
                 <th>Price</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody  class="zebra-stripe">
             <tr>
                 <td>
                     <div class="db__product">
@@ -350,17 +355,17 @@ echo '<a href="logout.php">Log Out</a>';
         <h2 class="db__subheading">Top Selling Categories</h2>
         <div class="db__bubbles">
             <div class="db__bubble">
-				<span class="db__bubble-text">
+				<span id="biggest" class="db__bubble-text">
 					Electronic<br><strong class="db__bubble-value">4,183</strong><br>per day
 				</span>
             </div>
             <div class="db__bubble">
-				<span class="db__bubble-text">
-					Fashion<br><strong class="db__bubble-value">2,215</strong><br>per day
+				<span id="bigger" class="db__bubble-text">
+					Fashion<br><strong class="db__bubble-value">2,215</strong><br>per da
 				</span>
             </div>
             <div class="db__bubble">
-				<span class="db__bubble-text">
+				<span id="big" class="db__bubble-text">
 					Books<br><strong class="db__bubble-value">1,012</strong><br>per day
 				</span>
             </div>
@@ -368,7 +373,7 @@ echo '<a href="logout.php">Log Out</a>';
     </div>
     <div class="db__cell">
         <h2 class="db__subheading">Recent Orders</h2>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#smartphone" />
@@ -382,7 +387,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$599.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#laptop" />
@@ -396,7 +401,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$1199.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#pants" />
@@ -410,7 +415,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$44.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#shirt" />
@@ -424,7 +429,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$54.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#monitor" />
@@ -438,7 +443,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$1,699.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#tablet" />
@@ -452,7 +457,7 @@ echo '<a href="logout.php">Log Out</a>';
             </div>
             <div><strong>$549.99</strong></div>
         </div>
-        <div class="db__order">
+        <div class="db__order db__order-item">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#hat" />
@@ -469,6 +474,224 @@ echo '<a href="logout.php">Log Out</a>';
     </div>
 </main>
 <!-- partial -->
+<script src="assets/js/jquery.min.js"></script>
+<!-- Load Payment Tile Dynamically using Ajax -->
+<script type="text/javascript">
+    function convertStringToFloat(strtofloat){
+        /// Convert the string to a decimal number
+        var decimalValue = parseFloat(strtofloat);
+
+        // console.log(decimalValue); // Output: 123.45
+
+        var defaultValue = 0.00; // Default value to use for nulls
+
+        var result = parseFloat(decimalValue) || defaultValue;
+        return result
+    }
+    function computePercentages(yesterday,today){
+        // Example string representing an integer
+        let percentageDifference = 0;
+        const yesterfloat = convertStringToFloat(yesterday);
+        const todayfloat =convertStringToFloat(today);
+        percentageDifference = ((today * 100) / yesterfloat) - 100;
+        return percentageDifference;
+    }
+    var currency = "KES";
+    callSalesDB = function (){
+        $.get("SalesDashboard/Todays_Revenue_Orders_Value.php", function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            for (i = 0; i < data.length; i++) {
+
+
+                // Update the title and inner value
+                $('#todaysales').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
+                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
+                // Check if sales difference is positive or negative
+                var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
+
+                // Update the title and inner value
+                $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
+                $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
+                // Check if sales difference is positive or negative
+                var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
+
+
+                // Update the title and inner value
+                $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
+                $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
+                // Check if sales difference is positive or negative
+                var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
+
+
+
+
+            }
+
+        });
+
+    }
+
+    callCategoriesDB = function (){
+        $.get("SalesDashboard/Top_Selling_Categories.php", function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            // Sort the data array based on DAILY_ORDERS in descending order
+            data.sort(function(a, b) {
+                return parseFloat(b.DAILY_ORDERS) - parseFloat(a.DAILY_ORDERS);
+            });
+            console.log(data);
+            for (i = 0; i < data.length; i++) {
+
+                if (i == 0){
+                    $('#biggest').find('.db__bubble-value').text();
+                    // Update the title and inner value
+                    $('#biggest').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
+                    $('#biggest').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+                    // Update the +15% vs yesterday
+                    let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
+                    // Check if sales difference is positive or negative
+                    var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                    // Update the text
+                    $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
+                }
+                else if (i == 1){
+                    // Update the title and inner value
+                    $('#bigger').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
+                    $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
+                    // Update the +15% vs yesterday
+                    salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
+                    // Check if sales difference is positive or negative
+                    var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                    // Update the text
+                    $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
+                }
+                else if (i == 2){
+                    // Update the title and inner value
+                    $('#big').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
+                    $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
+                    // Update the +15% vs yesterday
+                    salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
+                    // Check if sales difference is positive or negative
+                    var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                    // Update the text
+                    $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentag
+                }
+            }
+
+        });
+
+    }
+
+    // Define a variable to keep track of the number of polls
+    var pollCountSales = 0;
+
+    // Define a function to load dashboard categories
+    function load_sales_dash() {
+        // Check if the poll count has reached 15
+        if (pollCountSales >= 15) {
+            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+        }
+
+    if (pollCountSales <= 1)
+    {
+        console.info("Loading Database Information Before Introducing polling........");
+        callSalesDB();
+    }
+
+        // Increment the poll count
+        pollCountSales++;
+
+        // Call a function to generate a random sleep time
+        var randomSleepTime = getRandomSleepTime();
+        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+
+        // Use setTimeout to introduce a random sleep time before each poll
+        setTimeout(function() {
+            // Place your database polling code here
+            // For now, I'll just log a message
+            console.log("Polling database...");
+
+            callSalesDB();
+
+            // Call the function recursively after the sleep time
+            load_sales_dash();
+        }, randomSleepTime);
+    }
+
+    // Function to generate a random sleep time between 1 and 10 seconds
+    function getRandomSleepTime() {
+        return Math.floor(Math.random() * 10000) + 1000; // Random number between 1000 and 10000 milliseconds (1 to 10 seconds)
+    }
+
+    // Call the load_dash_categories function to start polling
+    // load_dash_categories();
+    // ------------------------------Start Handles Billing Categories --------------------------
+    var pollCountCategories = 0;
+
+    // Define a function to load dashboard categories
+    function load_categories_dash() {
+        // Check if the poll count has reached 15
+        if (pollCountCategories >= 15) {
+            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+        }
+
+        if (pollCountCategories <= 1)
+        {
+            console.info("Loading Database Information Before Introducing polling........");
+            callCategoriesDB();
+        }
+
+        // Increment the poll count
+        pollCountCategories++;
+
+        // Call a function to generate a random sleep time
+        var randomSleepTime = getRandomSleepTime();
+        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+
+        // Use setTimeout to introduce a random sleep time before each poll
+        setTimeout(function() {
+            // Place your database polling code here
+            // For now, I'll just log a message
+            console.log("Polling database...");
+
+            callCategoriesDB();
+
+            // Call the function recursively after the sleep time
+            load_categories_dash();
+        }, randomSleepTime);
+    }
+
+    // ------------------------------END Handles Billing Categories --------------------------
+
+    $(document).ready(function () {
+        // load_sales_dash();
+        load_categories_dash();
+    });
+
+
+</script>
+
 
 </body>
 </html>

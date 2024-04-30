@@ -491,7 +491,26 @@ class csrfProtector
 		//close the file handler
 		fclose($logFile);
 	}
-
+    /**
+     * Is Secure?
+     * Determines if the application is accessed via an encrypted
+     * (HTTPS) connection.
+     *
+     * @return  bool
+     */
+    private static function isSecure()
+    {
+        if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+            return true;
+        } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower($_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') {
+            return true;
+        } elseif (!empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+            return true;
+        } elseif (isset($_SERVER['SERVER_PORT']) && intval($_SERVER['SERVER_PORT']) === 443) {
+            return true;
+        }
+        return false;
+    }
 	/**
 	 * Function to return current url of executing page
 	 * @param: void
@@ -499,7 +518,9 @@ class csrfProtector
 	 */
 	private static function getCurrentUrl()
 	{
-		return $_SERVER['REQUEST_SCHEME'] .'://' .$_SERVER['HTTP_HOST'] .$_SERVER['PHP_SELF'];
+        $scheme = static::isSecure() ? 'https' : 'http';
+		return $scheme .'://' .$_SERVER['HTTP_HOST'] .$_SERVER['PHP_SELF'];
+//        return $_SERVER['REQUEST_SCHEME'] .'://' .$_SERVER['HTTP_HOST'] .$_SERVER['PHP_SELF'];
 	}
 
 	/**

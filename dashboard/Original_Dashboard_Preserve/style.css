@@ -177,17 +177,7 @@ strong {
 .db__subheading {
 	font-weight: 500;
 }
-.db__counter-label-sales {
-	line-height: 1;
-	margin-left: 0.75em;
-	text-align: right;
-}
-.db__counter-label-orders {
-	line-height: 1;
-	margin-left: 0.75em;
-	text-align: right;
-}
-.db__counter-label-avg {
+.db__counter-label {
 	line-height: 1;
 	margin-left: 0.75em;
 	text-align: right;

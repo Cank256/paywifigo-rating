@@ -6,7 +6,7 @@ try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
-session_start();
+if(!isset($_SESSION)) { session_start(); }
 if (isset($_SESSION['user_data'])) {
     header('Location: page1.php');
     exit();
