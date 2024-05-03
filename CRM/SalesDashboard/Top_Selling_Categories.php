@@ -13,7 +13,7 @@ $last_session_id = null;
 $retarray = null;
 $daysalesquerycategory = "
 SELECT 
-    ROUND(COALESCE(COUNT(payment.id), 0.00),2) AS DAILY_ORDERS,
+    ROUND(COALESCE(COUNT(payment.id), 0),2) AS DAILY_ORDERS,
     ROUND(COALESCE(SUM(payment.amount), 0.00),2) AS DAILY_SALES_ACCRUED,
     billing_plans.planType
 FROM billing_plans

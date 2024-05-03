@@ -356,17 +356,15 @@ echo '<a href="logout.php">Log Out</a></div>';
         <div class="db__bubbles">
             <div class="db__bubble">
 				<span id="biggest" class="db__bubble-text">
-					Electronic<br><strong class="db__bubble-value">4,183</strong><br>per day
+                    <span id="category-1">Data</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
 				</span>
             </div>
             <div class="db__bubble">
-				<span id="bigger" class="db__bubble-text">
-					Fashion<br><strong class="db__bubble-value">2,215</strong><br>per da
+				<span id="bigger" class="db__bubble-text"><span id="category-2">Time</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
 				</span>
             </div>
             <div class="db__bubble">
-				<span id="big" class="db__bubble-text">
-					Books<br><strong class="db__bubble-value">1,012</strong><br>per day
+				<span id="big" class="db__bubble-text"><span id="category-3">TimeData</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
 				</span>
             </div>
         </div>
@@ -559,41 +557,18 @@ echo '<a href="logout.php">Log Out</a></div>';
             for (i = 0; i < data.length; i++) {
 
                 if (i == 0){
-                    $('#biggest').find('.db__bubble-value').text();
-                    // Update the title and inner value
-                    $('#biggest').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
-                    $('#biggest').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
-                    // Update the +15% vs yesterday
-                    let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
-                    // Check if sales difference is positive or negative
-                    var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+                    document.querySelector("span[id='biggest'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                    document.querySelector("#category-1").innerHTML = `${data[i]["planType"]} pkg`;
 
-                    // Update the text
-                    $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
                 }
                 else if (i == 1){
-                    // Update the title and inner value
-                    $('#bigger').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
-                    $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
-                    // Update the +15% vs yesterday
-                    salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
-                    // Check if sales difference is positive or negative
-                    var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+                    document.querySelector("span[id='bigger'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                    document.querySelector("#category-2").innerHTML = `${data[i]["planType"]} pkg`;
 
-                    // Update the text
-                    $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
                 }
                 else if (i == 2){
-                    // Update the title and inner value
-                    $('#big').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
-                    $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
-                    // Update the +15% vs yesterday
-                    salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
-                    // Check if sales difference is positive or negative
-                    var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                    // Update the text
-                    $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentag
+                    document.querySelector("span[id='big'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                    document.querySelector("#category-3").innerHTML = `${data[i]["planType"]} pkg`;
                 }
             }
 
@@ -685,7 +660,7 @@ echo '<a href="logout.php">Log Out</a></div>';
     // ------------------------------END Handles Billing Categories --------------------------
 
     $(document).ready(function () {
-        // load_sales_dash();
+        load_sales_dash();
         load_categories_dash();
     });
 
