@@ -129,10 +129,6 @@ echo '<a href="logout.php">Log Out</a></div>';
 
         </div>
     </div>
-
-
-
-
     <div class="db__cell">
         <h2 class="db__top-stat">Today’s Revenue</h2>
         <div class="db__progress">
@@ -173,66 +169,66 @@ echo '<a href="logout.php">Log Out</a></div>';
         <h2 class="db__subheading">Sales in Last 7 Days</h2>
         <div class="db__bars">
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$4,610,555.90">
+                <div id="day7" class="db__bars-cell-bar" title="$4,610,555.90">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-92.2%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$3,612,857.76">
+                <div id="day6" class="db__bars-cell-bar" title="$3,612,857.76">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-72.3%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$2,137,371.54">
+                <div id="day5" class="db__bars-cell-bar" title="$2,137,371.54">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-42.7%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$4,856,109.94">
+                <div id="day4" class="db__bars-cell-bar" title="$4,856,109.94">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-97.1%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$3,662,766.81">
+                <div id="day3" class="db__bars-cell-bar" title="$3,662,766.81">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-73.3%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$2,895,150.25">
+                <div id="day2" class="db__bars-cell-bar" title="$2,895,150.25">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-57.9%)"></div>
                 </div>
             </div>
             <div class="db__bars-cell">
-                <div class="db__bars-cell-bar" title="$3,330,050.90">
+                <div id="day1" class="db__bars-cell-bar" title="$3,330,050.90">
                     <div class="db__bars-cell-bar-fill" style="transform:translateY(-66.6%)"></div>
                 </div>
             </div>
-            <div class="db__bars-cell">$5M</div>
-            <div class="db__bars-cell">$4M</div>
-            <div class="db__bars-cell">$3M</div>
-            <div class="db__bars-cell">$2M</div>
-            <div class="db__bars-cell">$1M</div>
-            <div class="db__bars-cell"></div>
+            <div id="subpart_6" class="db__bars-cell">$5</div>
+            <div id="subpart_5" class="db__bars-cell">$4</div>
+            <div id="subpart_4" class="db__bars-cell">$3</div>
+            <div id="subpart_3" class="db__bars-cell">$2</div>
+            <div id="subpart_2" class="db__bars-cell">$1</div>
+            <div id="subpart_1" class="db__bars-cell"></div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-01">MON</time>
+                <time id="dow7" datetime="2022-05-01">MON</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-02">TUE</time>
+                <time id="dow6" datetime="2022-05-02">TUE</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-03">WED</time>
+                <time id="dow5" datetime="2022-05-03">WED</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-04">THU</time>
+                <time id="dow4" datetime="2022-05-04">THU</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-05">FRI</time>
+                <time id="dow3" datetime="2022-05-05">FRI</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-06">SAT</time>
+                <time id="dow2" datetime="2022-05-06">SAT</time>
             </div>
             <div class="db__bars-cell">
-                <time datetime="2022-05-07">SUN</time>
+                <time id="dow1" datetime="2022-05-07">SUN</time>
             </div>
         </div>
     </div>
@@ -475,6 +471,35 @@ echo '<a href="logout.php">Log Out</a></div>';
 <script src="assets/js/jquery.min.js"></script>
 <!-- Load Payment Tile Dynamically using Ajax -->
 <script type="text/javascript">
+    function generateSubparts(maxValue)
+    {
+        // Calculate the step size
+        const stepSize = Math.ceil(maxValue / 5);
+
+        // Generate subparts
+        const subparts = [];
+        for (let i = 0; i <= 5; i++) {
+            subparts.push(i * stepSize);
+        }
+
+        // Adjust the maximum value if necessary
+        const adjustedMaxValue = subparts[subparts.length - 1];
+
+        return { adjustedMaxValue, subparts };
+    }
+
+    // // Example maximum values
+    // const maxValues = [44, 5, 20];
+    //
+    // maxValues.forEach(maxValue => {
+    //     const { adjustedMaxValue, subparts } = generateSubparts(maxValue);
+    //     console.log(`Max value: ${maxValue}`);
+    //     console.log(`Adjusted max value: ${adjustedMaxValue}`);
+    //     console.log("Subparts:");
+    //     console.log(subparts.join(', '));
+    //     console.log("\n");
+    // });
+
     function convertStringToFloat(strtofloat){
         /// Convert the string to a decimal number
         var decimalValue = parseFloat(strtofloat);
@@ -494,14 +519,20 @@ echo '<a href="logout.php">Log Out</a></div>';
         percentageDifference = ((today * 100) / yesterfloat) - 100;
         return percentageDifference;
     }
+    // Function to convert date to day of the week
+    function getDayOfWeek(dateString) {
+        const daysOfWeek = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
+        const date = new Date(dateString);
+        const dayIndex = date.getDay();
+        return daysOfWeek[dayIndex];
+    }
     var currency = "KES";
+    var DOW = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
     callSalesDB = function (){
         $.get("SalesDashboard/Todays_Revenue_Orders_Value.php", function (data) {
             data = $.parseJSON(data);
             console.log(data);
             for (i = 0; i < data.length; i++) {
-
-
                 // Update the title and inner value
                 $('#todaysales').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
                 $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
@@ -535,14 +566,100 @@ echo '<a href="logout.php">Log Out</a></div>';
 
                 // Update the text
                 $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
-
-
-
-
             }
-
         });
+    }
 
+    call7DaySalesDB = function (){
+        $.get("SalesDashboard/Sales_In_Last_7_Days.php", function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            for (i = 0; i < data.length; i++) {
+                // Update the title and inner value of bar graph titles
+                $('#day7').attr('title', '$' + data[i]["day6_before_sales"]);//.toFixed(2)); // Update title
+                $('#day6').attr('title', '$' + data[i]["day5_before_sales"]);//.toFixed(2)); // Update title
+                $('#day5').attr('title', '$' + data[i]["day4_before_sales"]);//.toFixed(2)); // Update title
+                $('#day4').attr('title', '$' + data[i]["day3_before_sales"]);//.toFixed(2)); // Update title
+                $('#day3').attr('title', '$' + data[i]["day2_before_sales"]);//.toFixed(2)); // Update title
+                $('#day2').attr('title', '$' + data[i]["yesterday_sales"]);//.toFixed(2)); // Update title
+                $('#day1').attr('title', '$' + data[i]["todaySales"]);//.toFixed(2)); // Update title
+
+                // Updates the timedate attribute.and the day of the Week
+                $('#dow7').attr('datetime', data[i]["day6_before"]);//.toFixed(2)); // Update datetime
+                $('#dow6').attr('datetime', data[i]["day5_before"]);//.toFixed(2)); // Update title
+                $('#dow5').attr('datetime', data[i]["day4_before"]);//.toFixed(2)); // Update title
+                $('#dow4').attr('datetime', data[i]["day3_before"]);//.toFixed(2)); // Update title
+                $('#dow3').attr('datetime', data[i]["day2_before"]);//.toFixed(2)); // Update title
+                $('#dow2').attr('datetime', data[i]["day1_before"]);//.toFixed(2)); // Update title
+                $('#dow1').attr('datetime', data[i]["today"]);//.toFixed(2)); // Update title
+
+                // Updates the day of the Week
+                $('#dow7').text(getDayOfWeek(data[i]["day6_before"]));//.toFixed(2)); // Update datetime
+                $('#dow6').text(getDayOfWeek(data[i]["day5_before"]));//.toFixed(2)); // Update title
+                $('#dow5').text(getDayOfWeek(data[i]["day4_before"]));//.toFixed(2)); // Update title
+                $('#dow4').text(getDayOfWeek(data[i]["day3_before"]));//.toFixed(2)); // Update title
+                $('#dow3').text(getDayOfWeek(data[i]["day2_before"]));//.toFixed(2)); // Update title
+                $('#dow2').text(getDayOfWeek(data[i]["day1_before"]));//.toFixed(2)); // Update title
+                $('#dow1').text(getDayOfWeek(data[i]["today"]));//.toFixed(2)); // Update title
+
+                // Set appropriate intervals
+                let { adjustedMaxValue, subparts } = generateSubparts(data[i]["max_amount_30days"]);
+                $('#subpart_6').text('$'+ adjustedMaxValue);//.toFixed(2)); // Update datetime
+                $('#subpart_5').text('$'+ subparts[4]);//.toFixed(2)); // Update title
+                $('#subpart_4').text('$'+ subparts[3]);//.toFixed(2)); // Update title
+                $('#subpart_3').text('$'+ subparts[2]);//.toFixed(2)); // Update title
+                $('#subpart_2').text('$'+ subparts[1]);//.toFixed(2)); // Update title
+                // $('#subpart_1').text('$'+ subparts[0]);//.toFixed(2)); // Update title
+
+                // Update the percentage bar charts.
+
+                $("#day7 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day6_before_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day6 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day5_before_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day5 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day4_before_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day4 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day3_before_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day3 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day2_before_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day2 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["yesterday_sales"]*100)/adjustedMaxValue}%)`);
+                $("#day1 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["todaySales"]*100)/adjustedMaxValue}%)`);
+
+
+
+
+                /*
+                                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+                                // Update the +15% vs yesterday
+                                let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
+                                // Check if sales difference is positive or negative
+                                var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                                // Update the text
+                                $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
+
+                                // Update the title and inner value
+                                $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
+                                $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
+                                // Update the +15% vs yesterday
+                                salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
+                                // Check if sales difference is positive or negative
+                                var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                                // Update the text
+                                $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
+
+
+                                // Update the title and inner value
+                                $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
+                                $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
+                                // Update the +15% vs yesterday
+                                salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
+                                // Check if sales difference is positive or negative
+                                var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                                // Update the text
+                                $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
+
+                 */
+            }
+        });
     }
 
     callCategoriesDB = function (){
@@ -657,10 +774,48 @@ echo '<a href="logout.php">Log Out</a></div>';
         }, randomSleepTime);
     }
 
+    // Define a variable to keep track of the number of polls
+    var pollCount7daySales = 0;
+
+    // Define a function to load dashboard categories
+    function load_7daysales_dash() {
+        // Check if the poll count has reached 15
+        if (pollCount7daySales >= 15) {
+            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+        }
+
+        if (pollCount7daySales <= 1)
+        {
+            console.info("Loading Database Information Before Introducing polling........");
+            call7DaySalesDB();
+        }
+
+        // Increment the poll count
+        pollCount7daySales++;
+
+        // Call a function to generate a random sleep time
+        var randomSleepTime = getRandomSleepTime();
+        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+
+        // Use setTimeout to introduce a random sleep time before each poll
+        setTimeout(function() {
+            // Place your database polling code here
+            // For now, I'll just log a message
+            console.log("Polling database...");
+
+            call7DaySalesDB();
+
+            // Call the function recursively after the sleep time
+            load_7daysales_dash();
+        }, randomSleepTime);
+    }
+
     // ------------------------------END Handles Billing Categories --------------------------
 
     $(document).ready(function () {
         load_sales_dash();
+        load_7daysales_dash();
         load_categories_dash();
     });
 

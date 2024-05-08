@@ -21,13 +21,13 @@ try {
 }
 try {
     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $stmt = $con->prepare("select count(*) as todaysorders, coalesce(sum(amount),0.00) as todays_sales, (SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS yesterday_date) as
+    $stmt = $con->prepare("
+select count(*) as todaysorders, coalesce(sum(amount),0.00) as todays_sales, (SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS yesterday_date) as
 yesterday_date, (select coalesce(sum(amount),0.00) from payment where creationdate >= yesterday_date and creationdate < CURDATE()) as yesterday_sales,
  (select count(*) from payment where creationdate >= yesterday_date and creationdate < CURDATE()) as yesterdayorders,
  ROUND(COALESCE(AVG(amount), 0.00), 2)  as averageorderamt,
  (select ROUND(COALESCE(AVG(amount), 0.00), 2)  from payment where creationdate >= yesterday_date and creationdate < CURDATE()) as avgorderamt_yesterday 
   from payment where creationdate >= CURDATE();
-
 ");
 //    $stmt->bindParam(':billingplanrowid', $billingplanrowid);
     $stmt->execute();

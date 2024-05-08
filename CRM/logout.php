@@ -6,7 +6,7 @@ try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
-session_start();
+if(!isset($_SESSION)) { session_start(); }
 
 // Check if the user is logged in. If not, redirect to the login page.
 if (!isset($_SESSION['user_data'])) {

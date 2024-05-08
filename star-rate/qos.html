@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prepaid Wi-Fi Feedback</title>
+</head>
+<body>
+<h1>Prepaid Wi-Fi Feedback</h1>
+<p>Thank you for using our prepaid Wi-Fi service. Your feedback helps us improve!</p>
+
+<form action="submit.php" method="post">
+    <h2>Connection Strength and Reliability</h2>
+    <label for="signal_strength">Overall Signal Strength (1-5):</label>
+    <select name="signal_strength" id="signal_strength">
+        <option value="1">1 (Very Weak)</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5 (Excellent)</option>
+    </select>
+    <br>
+
+    <label for="connection_drops">How often do you experience connection drops?</label>
+    <br>
+    <input type="radio" name="connection_drops" id="drops_never" value="never"> Never
+    <input type="radio" name="connection_drops" id="drops_occasional" value="occasional"> Occasionally
+    <input type="radio" name="connection_drops" id="drops_frequent" value="frequent"> Frequently
+    <br><br>
+
+    <h2>Data Usage and Value</h2>
+    <label for="data_plan_satisfied">Are you satisfied with the data options available?</label>
+    <br>
+    <input type="radio" name="data_plan_satisfied" id="plan_satisfied_yes" value="yes"> Yes
+    <input type="radio" name="data_plan_satisfied" id="plan_satisfied_no_data" value="no_data"> No, would prefer more data
+    <input type="radio" name="data_plan_satisfied" id="plan_satisfied_no_package" value="no_package"> No, would prefer different data packages
+    <br><br>
+
+    <label for="data_speed">How would you rate the internet speed?</label>
+    <select name="data_speed" id="data_speed">
+        <option value="very_slow">Very Slow</option>
+        <option value="slow">Slow</option>
+        <option value="moderate">Moderate</option>
+        <option value="fast">Fast</option>
+        <option value="very_fast">Very Fast</option>
+    </select>
+    <br><br>
+
+    <label for="value_for_money">Value for Money (1-5):</label>
+    <select name="value_for_money" id="value_for_money">
+        <option value="1">1 (Strongly Disagree)</option>
+        <option value="2">2</option>
+        <option value="3">3 (Neutral)</option>
+        <option value="4">4</option>
+        <option value="5">5 (Strongly Agree)</option>
+    </select>
+    <br><br>
+
+    <h2>User Experience and Additional Services</h2>
+    <label for="ease_of_use">How easy was it to connect to the Wi-Fi?</label>
+    <select name="ease_of_use" id="ease_of_use">
+        <option value="very_easy">Very Easy</option>
+        <option value="easy">Easy</option>
+        <option value="somewhat_difficult">Somewhat Difficult</option>
+        <option value="difficult">Difficult</option>
+    </select>
+    <br><br>
+
+    <label for="additional_services">Interested in additional services?</label>
+    <br>
+    <input type="checkbox" name="additional_services[]" id="service_charging" value="charging"> Device Charging Stations
+    <input type="checkbox" name="additional_services[]" id="service_content" value="content"> Access to Exclusive Content
+    <br><br>
+
+    <label for="overall_satisfaction">Overall Satisfaction:</label>
+    <select name="overall_satisfaction" id="overall_satisfaction">
+        <option value="very_satisfied">Very Satisfied</option>
+        <option value="satisfied">Satisfied</option>
+        <option value="neutral">Neutral</option>
+        <option value="dissatisfied">Dissatisfied</option>
+        <option value="very_dissatisfied">Very Dissatisfied</option>
+    </select>
+</form>
