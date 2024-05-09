@@ -537,3 +537,10 @@ time,
 			"f f f h";
 	}
 }
+.zebra-stripe tr:nth-child(odd) {
+	background-color: /*#524411;*/#2a1e5a;
+}
+
+.db__order-item:nth-child(even) {
+	background-color: #2a1e5a;
+}
