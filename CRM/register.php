@@ -19,10 +19,10 @@ if ($_SERVER && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] 
     } else {
 
 // Imports database Contants
-        require_once 'moviefi.conf.php';
+        require_once 'WifiProfiles/configs.php';
 
 // Create connection
-        $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $conn = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
 
 // Check connection
         if ($conn->connect_error) {

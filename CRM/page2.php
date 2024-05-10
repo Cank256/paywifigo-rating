@@ -33,6 +33,15 @@ if (isset($_SESSION['user_data'])) {
 echo '<a href="logout.php">Log Out</a>';
 
 ?>
+<?php
+require_once 'WifiProfiles/configs.php';
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
+
+$result = $mysqli->query("SELECT creationdate as created_at, amount as price, invoice_id as id, creationby as accesspoint FROM payment ORDER BY creationdate LIMIT 7");
+
+?>
 
 <!-- Your page content here -->
 <!DOCTYPE html>
@@ -353,122 +362,43 @@ echo '<a href="logout.php">Log Out</a>';
         <h2 class="db__subheading">Top Selling Categories</h2>
         <div class="db__bubbles">
             <div class="db__bubble">
-				<span class="db__bubble-text">
-					Electronic<br><strong class="db__bubble-value">4,183</strong><br>per day
-				</span>
+                                <span class="db__bubble-text">
+                                        Electronic<br><strong class="db__bubble-value">4,183</strong><br>per day
+                                </span>
             </div>
             <div class="db__bubble">
-				<span class="db__bubble-text">
-					Fashion<br><strong class="db__bubble-value">2,215</strong><br>per day
-				</span>
+                                <span class="db__bubble-text">
+                                        Fashion<br><strong class="db__bubble-value">2,215</strong><br>per day
+                                </span>
             </div>
             <div class="db__bubble">
-				<span class="db__bubble-text">
-					Books<br><strong class="db__bubble-value">1,012</strong><br>per day
-				</span>
+                                <span class="db__bubble-text">
+                                        Books<br><strong class="db__bubble-value">1,012</strong><br>per day
+                                </span>
             </div>
         </div>
     </div>
     <div class="db__cell">
         <h2 class="db__subheading">Recent Orders</h2>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#smartphone" />
-                </svg>
-            </div>
+<?php
+foreach($result as $row) {
+    $id = $row["id"];
+    $price = $row["price"];
+    $accesspoint = $row["accesspoint"]; 
+    $created_at = date("M d \a\\t H:i A", strtotime($row["created_at"]));
+    echo <<<HTML
+    <div class="db__order" data-id="$id">
             <div class="db__order-name">
-                iPhone 13<br>
+                $accesspoint<br>
                 <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
+                    <time datetime="$created_at">$created_at</time>
                 </small>
             </div>
-            <div><strong>$599.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#laptop" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Macbook Air 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1199.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#pants" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Denim #142 Light Blue<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$44.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#shirt" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                White Blouse<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$54.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#monitor" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iMac 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1,699.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#tablet" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPad Air 5<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$549.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#hat" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Fedora Hat<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$224.99</strong></div>
-        </div>
+            <div><strong>KSH$price</strong></div>
+        </div> 
+HTML;
+};  
+?>
     </div>
 </main>
 <!-- partial -->
