@@ -523,18 +523,6 @@ HTML;
         return { adjustedMaxValue, subparts };
     }
 
-    // // Example maximum values
-    // const maxValues = [44, 5, 20];
-    //
-    // maxValues.forEach(maxValue => {
-    //     const { adjustedMaxValue, subparts } = generateSubparts(maxValue);
-    //     console.log(`Max value: ${maxValue}`);
-    //     console.log(`Adjusted max value: ${adjustedMaxValue}`);
-    //     console.log("Subparts:");
-    //     console.log(subparts.join(', '));
-    //     console.log("\n");
-    // });
-
     function convertStringToFloat(strtofloat){
         /// Convert the string to a decimal number
         var decimalValue = parseFloat(strtofloat);
@@ -550,6 +538,9 @@ HTML;
         // Example string representing an integer
         let percentageDifference = 0;
         const yesterfloat = convertStringToFloat(yesterday);
+        if  (yesterfloat == 0) {
+            return 0;
+        }
         const todayfloat =convertStringToFloat(today);
         percentageDifference = ((today * 100) / yesterfloat) - 100;
         return percentageDifference;
@@ -644,9 +635,6 @@ HTML;
                 $('#subpart_4').text('$'+ subparts[3]);//.toFixed(2)); // Update title
                 $('#subpart_3').text('$'+ subparts[2]);//.toFixed(2)); // Update title
                 $('#subpart_2').text('$'+ subparts[1]);//.toFixed(2)); // Update title
-                // $('#subpart_1').text('$'+ subparts[0]);//.toFixed(2)); // Update title
-
-                // Update the percentage bar charts.
 
                 $("#day7 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day6_before_sales"]*100)/adjustedMaxValue}%)`);
                 $("#day6 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day5_before_sales"]*100)/adjustedMaxValue}%)`);
@@ -656,43 +644,6 @@ HTML;
                 $("#day2 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["yesterday_sales"]*100)/adjustedMaxValue}%)`);
                 $("#day1 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["todaySales"]*100)/adjustedMaxValue}%)`);
 
-
-
-
-                /*
-                                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
-                                // Update the +15% vs yesterday
-                                let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
-                                // Check if sales difference is positive or negative
-                                var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                                // Update the text
-                                $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
-
-                                // Update the title and inner value
-                                $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
-                                $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
-                                // Update the +15% vs yesterday
-                                salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
-                                // Check if sales difference is positive or negative
-                                var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                                // Update the text
-                                $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
-
-
-                                // Update the title and inner value
-                                $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
-                                $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
-                                // Update the +15% vs yesterday
-                                salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
-                                // Check if sales difference is positive or negative
-                                var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                                // Update the text
-                                $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
-
-                 */
             }
         });
     }
