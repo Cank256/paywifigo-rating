@@ -115,7 +115,7 @@ echo '<a href="logout.php">Log Out</a>';
 </svg>
 <main class="db">
     <div class="db__toolbar">
-        <h1 class="db__heading">Sales</h1>
+        <h1 class="db__heading">Product Performance Management</h1>
         <div class="db__toolbar-btns">
             <button class="db__select" type="button">
                 <svg class="db__select-icon" width="24px" height="24px" aria-hidden="true">
@@ -132,43 +132,43 @@ echo '<a href="logout.php">Log Out</a>';
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__top-stat">Today’s Revenue</h2>
+        <h2 class="db__top-stat"><strong>82%</strong> Win/Lost Customer Revenue</h2>
         <div class="db__progress">
             <div class="db__progress-fill" style="transform:translateX(15%)"></div>
         </div>
         <div class="db__counter">
             <div class="db__counter-value" title="$3,330,050.90">$3.33M</div>
             <div class="db__counter-label">
-                <strong>+15%</strong><br><small>vs yesterday</small>
+                <strong>+15%</strong><br><small>vs last month</small>
             </div>
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__top-stat">Today’s Orders</h2>
+        <h2 class="db__top-stat">88% Win/Lost Customer Opportunities</h2>
         <div class="db__progress">
             <div class="db__progress-fill" style="transform:translateX(20%)"></div>
         </div>
         <div class="db__counter">
             <div class="db__counter-value">7,410</div>
             <div class="db__counter-label">
-                <strong>+20%</strong><br><small>vs yesterday</small>
+                <strong>+20%</strong><br><small>vs last month</small>
             </div>
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__top-stat">Avg. Order Value</h2>
+        <h2 class="db__top-stat">Total Traffic This Month</h2>
         <div class="db__progress">
             <div class="db__progress-fill" style="transform:translateX(42%)"></div>
         </div>
         <div class="db__counter">
-            <div class="db__counter-value">$449.40</div>
+            <div class="db__counter-value">449K</div>
             <div class="db__counter-label">
-                <strong>+42%</strong><br><small>vs yesterday</small>
+                <strong>+42%</strong><br><small>vs last month</small>
             </div>
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Sales in Last 7 Days</h2>
+        <h2 class="db__subheading" title="is the rate at which customers stop doing business with an entity">Sales Churn Rate in Last 7 Months</h2>
         <div class="db__bars">
             <div class="db__bars-cell">
                 <div class="db__bars-cell-bar" title="$4,610,555.90">
@@ -350,7 +350,7 @@ echo '<a href="logout.php">Log Out</a>';
         </table>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Top Selling Categories</h2>
+        <h2 class="db__subheading">Product Price Preview</h2>
         <div class="db__bubbles">
             <div class="db__bubble">
 				<span class="db__bubble-text">
@@ -370,7 +370,7 @@ echo '<a href="logout.php">Log Out</a>';
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Recent Orders</h2>
+        <h2 class="db__subheading">Modify Product Pricing</h2>
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
