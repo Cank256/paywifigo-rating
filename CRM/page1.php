@@ -33,6 +33,15 @@ if (isset($_SESSION['user_data'])) {
 echo '<a href="logout.php">Log Out</a></div>';
 
 ?>
+<?php
+require_once 'WifiProfiles/configs.php';
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
+
+$result = $mysqli->query("SELECT creationdate as created_at, amount as price, invoice_id as id, creationby as accesspoint FROM payment ORDER BY creationdate DESC LIMIT 7");
+
+?>
 <!DOCTYPE html>
 <html lang="en" >
 <head>
@@ -367,104 +376,130 @@ echo '<a href="logout.php">Log Out</a></div>';
     </div>
     <div class="db__cell">
         <h2 class="db__subheading">Recent Orders</h2>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#smartphone" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPhone 13<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$599.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#laptop" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Macbook Air 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1199.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#pants" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Denim #142 Light Blue<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$44.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#shirt" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                White Blouse<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$54.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
+        <?php
+        foreach($result as $row) {
+            $id = $row["id"];
+            $price = $row["price"];
+            $accesspoint = $row["accesspoint"];
+            $created_at = date("M d \a\\t H:i A", strtotime($row["created_at"]));
+            echo <<<HTML
+    <div class="db__order" data-id="$id">
+   <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
                     <use xlink:href="#monitor" />
                 </svg>
-            </div>
+            </div> 
             <div class="db__order-name">
-                iMac 2022<br>
+                $accesspoint<br>
                 <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
+                    <time datetime="$created_at">$created_at</time>
                 </small>
             </div>
-            <div><strong>$1,699.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#tablet" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPad Air 5<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$549.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#hat" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Fedora Hat<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$224.99</strong></div>
-        </div>
+            <div><strong>$$price</strong></div>
+        </div> 
+HTML;
+        };
+        ?>
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#smartphone" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                iPhone 13<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$599.99</strong></div>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#laptop" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                Macbook Air 2022<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$1199.99</strong></div>-->
+<!--        </div>-->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#pants" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                Denim #142 Light Blue<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$44.99</strong></div>-->
+<!--        </div>-->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#shirt" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                White Blouse<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$54.99</strong></div>-->
+<!--        </div>-->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#monitor" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                iMac 2022<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$1,699.99</strong></div>-->
+<!--        </div>-->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#tablet" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                iPad Air 5<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$549.99</strong></div>-->
+<!--        </div>-->
+<!--        <div class="db__order db__order-item">-->
+<!--            <div class="db__order-cat">-->
+<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
+<!--                    <use xlink:href="#hat" />-->
+<!--                </svg>-->
+<!--            </div>-->
+<!--            <div class="db__order-name">-->
+<!--                Fedora Hat<br>-->
+<!--                <small>-->
+<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
+<!--                </small>-->
+<!--            </div>-->
+<!--            <div><strong>$224.99</strong></div>-->
+<!--        </div>-->
+
     </div>
 </main>
 <!-- partial -->
@@ -527,7 +562,7 @@ echo '<a href="logout.php">Log Out</a></div>';
         return daysOfWeek[dayIndex];
     }
     var currency = "KES";
-    var DOW = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
+
     callSalesDB = function (){
         $.get("SalesDashboard/Todays_Revenue_Orders_Value.php", function (data) {
             data = $.parseJSON(data);
@@ -691,6 +726,48 @@ echo '<a href="logout.php">Log Out</a></div>';
 
         });
 
+    }
+
+    callRecentOrdersDB = function (){
+        $.get("SalesDashboard/Recent_Orders.php", function (data) {
+            data = $.parseJSON(data);
+            console.log(data);
+            for (i = 0; i < data.length; i++) {
+                // Update the title and inner value
+                $('#todaysales').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
+                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
+                // Check if sales difference is positive or negative
+                var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
+
+                // Update the title and inner value
+                $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
+                $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
+                // Check if sales difference is positive or negative
+                var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
+
+
+                // Update the title and inner value
+                $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
+                $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
+                // Update the +15% vs yesterday
+                salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
+                // Check if sales difference is positive or negative
+                var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+                // Update the text
+                $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
+            }
+        });
     }
 
     // Define a variable to keep track of the number of polls
