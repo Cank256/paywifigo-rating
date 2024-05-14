@@ -1,21 +1,20 @@
 <?php
-// Assuming you have fetched the data from your database and stored it in a variable called $products
-// For demonstration, let's assume $products is an array of arrays containing product details
-$products = [
-    ['Product' => 'iPhone 13', 'Orders' => 2710, 'Status' => 'In Stock', 'Price' => '$599.99'],
-    ['Product' => 'iPhone 13', 'Orders' => 2710, 'Status' => 'In Stock', 'Price' => '$599.99'],
-    ['Product' => 'iPhone 13', 'Orders' => 2710, 'Status' => 'In Stock', 'Price' => '$599.99'],
-    ['Product' => 'iPhone 13', 'Orders' => 2710, 'Status' => 'In Stock', 'Price' => '$599.99'],
-    ['Product' => 'iPhone 13', 'Orders' => 2710, 'Status' => 'In Stock', 'Price' => '$599.99'],
-    // Add more products here if needed
-];
 
 require_once 'WifiProfiles/configs.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
 
-$products = $mysqli->query("SELECT creationdate as Product, amount as Orders, invoice_id as Status, creationby as Price FROM payment ORDER BY creationdate DESC LIMIT 7");
+$products = $mysqli->query("
+SELECT bp.planName AS plan_name, p.creationBy AS creation_by, COUNT(*) as orders,
+    SUM(p.amount) as revenue, ROUND(AVG(r.rating),1) AS ratings
+    FROM billing_plans bp JOIN radcheck rc on bp.bp_id = rc.bp_id 
+    JOIN payment p ON rc.payment_id_fk = p.id 
+    JOIN ratings r ON bp.bp_id = r.prod_id 
+    group by bp.planName, p.creationBy 
+    order by ratings 
+    DESC LIMIT 10;
+  ");
 
 
 // Start output buffering to capture the HTML content
@@ -31,9 +30,10 @@ ob_start();
     <thead>
     <tr>
         <th>Plan Name</th>
+        <th>Access Point</th>
         <th>Orders</th>
         <th>Rating</th>
-        <th>Price</th>
+        <th>Revenue</th>
     </tr>
     </thead>
     <tbody  class="zebra-stripe">
@@ -41,12 +41,23 @@ ob_start();
     <?php foreach ($products as $product): ?>
         <?php
         // Extract product details
-        $productName = $product['Product'];
-        $orders = number_format($product['Orders']); // Format orders with commas
-        $status = $product['Status'];
-        $price = $product['Price'];
+        $productName = $product['plan_name'];
+        $productLocation= $product['creation_by'];
+        $orders = number_format($product['orders']); // Format orders with commas
+        $productRating = $product['ratings'];
+        $price = $product['revenue'];
         // Set status color based on availability
-        $statusClass = $status == 'In Stock' ? 'db__status--green' : 'db__status--red';
+        if ($productRating > 4)
+        {
+            $statusClass = 'db__status--green';
+        }
+        else if ($productRating < 4 &&  $productRating > 3){
+            $statusClass = 'db__status--orange';
+
+        }
+        else{
+            $statusClass = 'db__status--red';
+        }
         ?>
 
         <tr>
@@ -55,19 +66,20 @@ ob_start();
                     <div class="db__product-details">
                         <div class="db__product-detail-line"><?= $productName ?></div>
                         <div class="db__product-detail-line">
-                            <small><?= $orders ?> Orders</small>
+                            <small><?= $orders ?> Orders@<?= $productLocation?></small>
                         </div>
-                        <div class="db__status <?= $statusClass ?>"><?= $status ?></div>
+                        <div class="db__status <?= $statusClass ?>"><?= $productRating ?></div>
                     </div>
                     <div class="db__product-details">
-                        <strong><?= $price ?></strong>
+                        <strong>$<?= $price ?></strong>
                     </div>
                 </div>
             </td>
             <td><?= $productName ?></td>
+            <td><?= $productLocation ?></td>
             <td><?= $orders ?></td>
-            <td class="db__status <?= $statusClass ?>"><?= $status ?></td>
-            <td><strong><?= $price ?></strong></td>
+            <td class="db__status <?= $statusClass ?>"><?= $productRating ?></td>
+            <td><strong>$<?= $price ?></strong></td>
         </tr>
 
     <?php endforeach; ?>

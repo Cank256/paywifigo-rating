@@ -8,7 +8,7 @@ try {
 }
 if(!isset($_SESSION)) { session_start(); }
 if (isset($_SESSION['user_data'])) {
-    header('Location: page1.php');
+    header('Location: Sales-Dashboard.php');
     exit();
 }
 if (isset($_SESSION['referer']))
@@ -65,7 +65,7 @@ if (isset($_SESSION['referer']))
                     exit();
                 } else {
                     // If there's no referer in the session, redirect to a default page.
-                    header('Location: page1.php');
+                    header('Location: Sales-Dashboard.php');
                     exit();
                 }
                 exit();
