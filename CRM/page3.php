@@ -59,7 +59,8 @@ ob_start();
     <meta charset="UTF-8">
     <title>CodePen - Sales Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'><link rel="stylesheet" href="./style.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'>
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 <body >
