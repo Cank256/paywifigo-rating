@@ -40,8 +40,17 @@ echo '<a href="logout.php">Log Out</a></div>';
     <meta charset="UTF-8">
     <title>CodePen - Sales Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'><link rel="stylesheet" href="./style.css">
-
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&amp;display=swap'>
+    <link rel="stylesheet" href="./style.css" />
+     <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./update_price.css" />
 </head>
 <body >
 <!-- partial:index.partial.html -->
@@ -352,281 +361,288 @@ echo '<a href="logout.php">Log Out</a></div>';
         <h2 class="db__subheading">Product Price Preview</h2>
         <div class="db__bubbles">
             <div class="db__bubble">
-				<span id="biggest" class="db__bubble-text">
+                                <span id="biggest" class="db__bubble-text">
                     <span id="category-1">Data</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
-				</span>
+                                </span>
             </div>
             <div class="db__bubble">
-				<span id="bigger" class="db__bubble-text"><span id="category-2">Time</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
-				</span>
+                                <span id="bigger" class="db__bubble-text"><span id="category-2">Time</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
+                                </span>
             </div>
             <div class="db__bubble">
-				<span id="big" class="db__bubble-text"><span id="category-3">TimeData</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
-				</span>
+                                <span id="big" class="db__bubble-text"><span id="category-3">TimeData</span><br><strong class="db__bubble-value">0,000</strong><br>orders made
+                                </span>
             </div>
         </div>
     </div>
-    <div class="db__cell">
-        <h2 class="db__subheading">Modify Product Pricing</h2>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#smartphone" />
-                </svg>
+    <main class="update__price">
+    <ul class="lists">
+<?php
+global $configValues;
+require_once 'WifiProfiles/configs.php';
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
+
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+
+$sql = "SELECT planName as name, creationdate as datetime, planCost as price, planCurrency as currency, bp_id as id   
+    FROM 
+    billing_plans
+";
+$results = $mysqli->query($sql);
+
+foreach ($results as $result) 
+{
+    $created_at = date_format(date_create($result["datetime"]), "M j \a\\t h:ia");
+    $id = str_replace(" ", "_", $result["name"]);
+    echo <<<HTML
+         <li class="list-item" data-id=$id id=$id data-id_num={$result["id"]}>
+          <section class="list-item__inner">
+            <div>
+              <svg
+                class="img edit-icon"
+                viewBox="0 0 512 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                  d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
+                />
+                <span style="color: darkgreen; text-decoration: underline">
+                  Edit
+                </span>
+              </svg>
+              <div class="list-item-desc">
+                <div class="center">
+                  <h2>{$result["name"]}</h2>
+                  <time datetime=$created_at>$created_at</time>
+                </div>
+              </div>
             </div>
-            <div class="db__order-name">
-                iPhone 13<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$599.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#laptop" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Macbook Air 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1199.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#pants" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Denim #142 Light Blue<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$44.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#shirt" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                White Blouse<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$54.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#monitor" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iMac 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1,699.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#tablet" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPad Air 5<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$549.99</strong></div>
-        </div>
-        <div class="db__order db__order-item">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#hat" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Fedora Hat<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$224.99</strong></div>
-        </div>
-    </div>
+
+            <aside>
+              <h2 class="price__value">
+                <span class="veeam-price">{$result["currency"]}</span>
+                <span class="currency_price"> {$result["price"]} </span>
+              </h2>
+            </aside>
+          </section>
+          <section class="hidden_section hidden">
+            <form method="UPDATE">
+              <button class="save save__price" type="submit">Save</button>
+              <!-- partial:index.partial.html -->
+              <div>
+                <div
+                  id="curr_product"
+                  style="text-align: center; vertical-align: middle"
+                >
+                  Product
+                </div>
+                <div class="veeam-license-wrap">
+                  <div class="col border-right">
+                    <h3>Update Price Tag</h3>
+                    <div class="quantity">
+                      <input
+                        class="quantity-input"
+                        max="100"
+                        min="0"
+                        step="1"
+                        type="number"
+                        value="100"
+                      />
+                    <div class="quantity-nav">
+                    <div class="quantity-button quantity-up">
+                    <i class="fa fa-plus"></i>
+                </div>
+                         <div class="quantity-button quantity-down">
+                         <i class="fa fa-minus"></i>
+                         </div>
+                         </div>
+                            </div>
+                    <div class="veeam-footnote">* Maximum of 100 percent.</div>
+                  </div>
+                  <div class="col">
+                    <div class="veeam-total" data-price={$result["price"]}>
+                      <h3>New Total:</h3>
+                      <div>
+                        <span class="veeam-price">{$result["currency"]}</span>
+                        <span class="price__cont"> {$result["price"]} </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </section>
+        </li> 
+HTML;
+} 
+?>
+      </ul>
+    </main>   
 </main>
 <!-- partial -->
 <script src="assets/js/jquery.min.js"></script>
 <!-- Load Payment Tile Dynamically using Ajax -->
 <script type="text/javascript">
-    function generateSubparts(maxValue)
-    {
-        // Calculate the step size
-        const stepSize = Math.ceil(maxValue / 5);
+function generateSubparts(maxValue)
+{
+    // Calculate the step size
+    const stepSize = Math.ceil(maxValue / 5);
 
-        // Generate subparts
-        const subparts = [];
-        for (let i = 0; i <= 5; i++) {
-            subparts.push(i * stepSize);
+    // Generate subparts
+    const subparts = [];
+    for (let i = 0; i <= 5; i++) {
+        subparts.push(i * stepSize);
+    }
+
+    // Adjust the maximum value if necessary
+    const adjustedMaxValue = subparts[subparts.length - 1];
+
+    return { adjustedMaxValue, subparts };
+}
+
+// // Example maximum values
+// const maxValues = [44, 5, 20];
+//
+// maxValues.forEach(maxValue => {
+//     const { adjustedMaxValue, subparts } = generateSubparts(maxValue);
+//     console.log(`Max value: ${maxValue}`);
+//     console.log(`Adjusted max value: ${adjustedMaxValue}`);
+//     console.log("Subparts:");
+//     console.log(subparts.join(', '));
+//     console.log("\n");
+// });
+
+function convertStringToFloat(strtofloat){
+    /// Convert the string to a decimal number
+    var decimalValue = parseFloat(strtofloat);
+
+    // console.log(decimalValue); // Output: 123.45
+
+    var defaultValue = 0.00; // Default value to use for nulls
+
+    var result = parseFloat(decimalValue) || defaultValue;
+    return result
+}
+function computePercentages(yesterday,today){
+    // Example string representing an integer
+    let percentageDifference = 0;
+    const yesterfloat = convertStringToFloat(yesterday);
+    const todayfloat =convertStringToFloat(today);
+    percentageDifference = ((today * 100) / yesterfloat) - 100;
+    return percentageDifference;
+}
+// Function to convert date to day of the week
+function getDayOfWeek(dateString) {
+    const daysOfWeek = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
+    const date = new Date(dateString);
+    const dayIndex = date.getDay();
+    return daysOfWeek[dayIndex];
+}
+var currency = "KES";
+var DOW = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
+callSalesDB = function (){
+    $.get("SalesDashboard/Todays_Revenue_Orders_Value.php", function (data) {
+        data = $.parseJSON(data);
+        console.log(data);
+        for (i = 0; i < data.length; i++) {
+            // Update the title and inner value
+            $('#todaysales').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
+            $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+            // Update the +15% vs yesterday
+            let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
+            // Check if sales difference is positive or negative
+            var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+            // Update the text
+            $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
+
+            // Update the title and inner value
+            $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
+            $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
+            // Update the +15% vs yesterday
+            salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
+            // Check if sales difference is positive or negative
+            var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+            // Update the text
+            $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
+
+
+            // Update the title and inner value
+            $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
+            $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
+            // Update the +15% vs yesterday
+            salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
+            // Check if sales difference is positive or negative
+            var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
+
+            // Update the text
+            $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
         }
+    });
+}
 
-        // Adjust the maximum value if necessary
-        const adjustedMaxValue = subparts[subparts.length - 1];
+call7DaySalesDB = function (){
+    $.get("SalesDashboard/Sales_In_Last_7_Days.php", function (data) {
+        data = $.parseJSON(data);
+        console.log(data);
+        for (i = 0; i < data.length; i++) {
+            // Update the title and inner value of bar graph titles
+            $('#day7').attr('title', '$' + data[i]["day6_before_sales"]);//.toFixed(2)); // Update title
+            $('#day6').attr('title', '$' + data[i]["day5_before_sales"]);//.toFixed(2)); // Update title
+            $('#day5').attr('title', '$' + data[i]["day4_before_sales"]);//.toFixed(2)); // Update title
+            $('#day4').attr('title', '$' + data[i]["day3_before_sales"]);//.toFixed(2)); // Update title
+            $('#day3').attr('title', '$' + data[i]["day2_before_sales"]);//.toFixed(2)); // Update title
+            $('#day2').attr('title', '$' + data[i]["yesterday_sales"]);//.toFixed(2)); // Update title
+            $('#day1').attr('title', '$' + data[i]["todaySales"]);//.toFixed(2)); // Update title
 
-        return { adjustedMaxValue, subparts };
-    }
+            // Updates the timedate attribute.and the day of the Week
+            $('#dow7').attr('datetime', data[i]["day6_before"]);//.toFixed(2)); // Update datetime
+            $('#dow6').attr('datetime', data[i]["day5_before"]);//.toFixed(2)); // Update title
+            $('#dow5').attr('datetime', data[i]["day4_before"]);//.toFixed(2)); // Update title
+            $('#dow4').attr('datetime', data[i]["day3_before"]);//.toFixed(2)); // Update title
+            $('#dow3').attr('datetime', data[i]["day2_before"]);//.toFixed(2)); // Update title
+            $('#dow2').attr('datetime', data[i]["day1_before"]);//.toFixed(2)); // Update title
+            $('#dow1').attr('datetime', data[i]["today"]);//.toFixed(2)); // Update title
 
-    // // Example maximum values
-    // const maxValues = [44, 5, 20];
-    //
-    // maxValues.forEach(maxValue => {
-    //     const { adjustedMaxValue, subparts } = generateSubparts(maxValue);
-    //     console.log(`Max value: ${maxValue}`);
-    //     console.log(`Adjusted max value: ${adjustedMaxValue}`);
-    //     console.log("Subparts:");
-    //     console.log(subparts.join(', '));
-    //     console.log("\n");
-    // });
+            // Updates the day of the Week
+            $('#dow7').text(getDayOfWeek(data[i]["day6_before"]));//.toFixed(2)); // Update datetime
+            $('#dow6').text(getDayOfWeek(data[i]["day5_before"]));//.toFixed(2)); // Update title
+            $('#dow5').text(getDayOfWeek(data[i]["day4_before"]));//.toFixed(2)); // Update title
+            $('#dow4').text(getDayOfWeek(data[i]["day3_before"]));//.toFixed(2)); // Update title
+            $('#dow3').text(getDayOfWeek(data[i]["day2_before"]));//.toFixed(2)); // Update title
+            $('#dow2').text(getDayOfWeek(data[i]["day1_before"]));//.toFixed(2)); // Update title
+            $('#dow1').text(getDayOfWeek(data[i]["today"]));//.toFixed(2)); // Update title
 
-    function convertStringToFloat(strtofloat){
-        /// Convert the string to a decimal number
-        var decimalValue = parseFloat(strtofloat);
+            // Set appropriate intervals
+            let { adjustedMaxValue, subparts } = generateSubparts(data[i]["max_amount_30days"]);
+            $('#subpart_6').text('$'+ adjustedMaxValue);//.toFixed(2)); // Update datetime
+            $('#subpart_5').text('$'+ subparts[4]);//.toFixed(2)); // Update title
+            $('#subpart_4').text('$'+ subparts[3]);//.toFixed(2)); // Update title
+            $('#subpart_3').text('$'+ subparts[2]);//.toFixed(2)); // Update title
+            $('#subpart_2').text('$'+ subparts[1]);//.toFixed(2)); // Update title
+            // $('#subpart_1').text('$'+ subparts[0]);//.toFixed(2)); // Update title
 
-        // console.log(decimalValue); // Output: 123.45
+            // Update the percentage bar charts.
 
-        var defaultValue = 0.00; // Default value to use for nulls
-
-        var result = parseFloat(decimalValue) || defaultValue;
-        return result
-    }
-    function computePercentages(yesterday,today){
-        // Example string representing an integer
-        let percentageDifference = 0;
-        const yesterfloat = convertStringToFloat(yesterday);
-        const todayfloat =convertStringToFloat(today);
-        percentageDifference = ((today * 100) / yesterfloat) - 100;
-        return percentageDifference;
-    }
-    // Function to convert date to day of the week
-    function getDayOfWeek(dateString) {
-        const daysOfWeek = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
-        const date = new Date(dateString);
-        const dayIndex = date.getDay();
-        return daysOfWeek[dayIndex];
-    }
-    var currency = "KES";
-    var DOW = ['SUN','MON','TUE','WEN','THU','FRI','SAT'];
-    callSalesDB = function (){
-        $.get("SalesDashboard/Todays_Revenue_Orders_Value.php", function (data) {
-            data = $.parseJSON(data);
-            console.log(data);
-            for (i = 0; i < data.length; i++) {
-                // Update the title and inner value
-                $('#todaysales').attr('title', '$' + data[i]["todays_sales"]);//.toFixed(2)); // Update title
-                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
-                // Update the +15% vs yesterday
-                let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
-                // Check if sales difference is positive or negative
-                var salesText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                // Update the text
-                $('.db__counter-label-sales strong').text(`${salesText}%`);// Update the percentage
-
-                // Update the title and inner value
-                $('#todayorders').attr('title', data[i]["todaysorders"]);//.toFixed(2)); // Update title
-                $('#todayorders').text(data[i]["todaysorders"]);//.toFixed(2)); // Update inner value
-                // Update the +15% vs yesterday
-                salesdiff = computePercentages(data[i]["yesterdayorders"],data[i]["todaysorders"]);
-                // Check if sales difference is positive or negative
-                var ordersText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                // Update the text
-                $('.db__counter-label-orders strong').text(`${ordersText}%`);// Update the percentage
-
-
-                // Update the title and inner value
-                $('#averagesales').attr('title', '$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update title
-                $('#averagesales').text('$' + data[i]["averageorderamt"]);//.toFixed(2)); // Update inner value
-                // Update the +15% vs yesterday
-                salesdiff = computePercentages(data[i]["avgorderamt_yesterday"],data[i]["averageorderamt"]);
-                // Check if sales difference is positive or negative
-                var avgsText = (salesdiff >= 0) ? '+' + salesdiff.toFixed(2) : salesdiff.toFixed(2);
-
-                // Update the text
-                $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
-            }
-        });
-    }
-
-    call7DaySalesDB = function (){
-        $.get("SalesDashboard/Sales_In_Last_7_Days.php", function (data) {
-            data = $.parseJSON(data);
-            console.log(data);
-            for (i = 0; i < data.length; i++) {
-                // Update the title and inner value of bar graph titles
-                $('#day7').attr('title', '$' + data[i]["day6_before_sales"]);//.toFixed(2)); // Update title
-                $('#day6').attr('title', '$' + data[i]["day5_before_sales"]);//.toFixed(2)); // Update title
-                $('#day5').attr('title', '$' + data[i]["day4_before_sales"]);//.toFixed(2)); // Update title
-                $('#day4').attr('title', '$' + data[i]["day3_before_sales"]);//.toFixed(2)); // Update title
-                $('#day3').attr('title', '$' + data[i]["day2_before_sales"]);//.toFixed(2)); // Update title
-                $('#day2').attr('title', '$' + data[i]["yesterday_sales"]);//.toFixed(2)); // Update title
-                $('#day1').attr('title', '$' + data[i]["todaySales"]);//.toFixed(2)); // Update title
-
-                // Updates the timedate attribute.and the day of the Week
-                $('#dow7').attr('datetime', data[i]["day6_before"]);//.toFixed(2)); // Update datetime
-                $('#dow6').attr('datetime', data[i]["day5_before"]);//.toFixed(2)); // Update title
-                $('#dow5').attr('datetime', data[i]["day4_before"]);//.toFixed(2)); // Update title
-                $('#dow4').attr('datetime', data[i]["day3_before"]);//.toFixed(2)); // Update title
-                $('#dow3').attr('datetime', data[i]["day2_before"]);//.toFixed(2)); // Update title
-                $('#dow2').attr('datetime', data[i]["day1_before"]);//.toFixed(2)); // Update title
-                $('#dow1').attr('datetime', data[i]["today"]);//.toFixed(2)); // Update title
-
-                // Updates the day of the Week
-                $('#dow7').text(getDayOfWeek(data[i]["day6_before"]));//.toFixed(2)); // Update datetime
-                $('#dow6').text(getDayOfWeek(data[i]["day5_before"]));//.toFixed(2)); // Update title
-                $('#dow5').text(getDayOfWeek(data[i]["day4_before"]));//.toFixed(2)); // Update title
-                $('#dow4').text(getDayOfWeek(data[i]["day3_before"]));//.toFixed(2)); // Update title
-                $('#dow3').text(getDayOfWeek(data[i]["day2_before"]));//.toFixed(2)); // Update title
-                $('#dow2').text(getDayOfWeek(data[i]["day1_before"]));//.toFixed(2)); // Update title
-                $('#dow1').text(getDayOfWeek(data[i]["today"]));//.toFixed(2)); // Update title
-
-                // Set appropriate intervals
-                let { adjustedMaxValue, subparts } = generateSubparts(data[i]["max_amount_30days"]);
-                $('#subpart_6').text('$'+ adjustedMaxValue);//.toFixed(2)); // Update datetime
-                $('#subpart_5').text('$'+ subparts[4]);//.toFixed(2)); // Update title
-                $('#subpart_4').text('$'+ subparts[3]);//.toFixed(2)); // Update title
-                $('#subpart_3').text('$'+ subparts[2]);//.toFixed(2)); // Update title
-                $('#subpart_2').text('$'+ subparts[1]);//.toFixed(2)); // Update title
-                // $('#subpart_1').text('$'+ subparts[0]);//.toFixed(2)); // Update title
-
-                // Update the percentage bar charts.
-
-                $("#day7 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day6_before_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day6 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day5_before_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day5 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day4_before_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day4 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day3_before_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day3 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day2_before_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day2 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["yesterday_sales"]*100)/adjustedMaxValue}%)`);
-                $("#day1 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["todaySales"]*100)/adjustedMaxValue}%)`);
+            $("#day7 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day6_before_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day6 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day5_before_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day5 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day4_before_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day4 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day3_before_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day3 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["day2_before_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day2 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["yesterday_sales"]*100)/adjustedMaxValue}%)`);
+            $("#day1 .db__bars-cell-bar-fill").css("transform", `translateY(-${(data[i]["todaySales"]*100)/adjustedMaxValue}%)`);
 
 
 
 
                 /*
-                                $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
+                    $('#todaysales').text('$' + data[i]["todays_sales"]);//.toFixed(2)); // Update inner value
                                 // Update the +15% vs yesterday
                                 let salesdiff = computePercentages(data[i]["yesterday_sales"],data[i]["todays_sales"]);
                                 // Check if sales difference is positive or negative
@@ -659,51 +675,51 @@ echo '<a href="logout.php">Log Out</a></div>';
                                 $('.db__counter-label-avg strong').text(`${avgsText}%`);// Update the percentage
 
                  */
-            }
-        });
-    }
-
-    callCategoriesDB = function (){
-        $.get("SalesDashboard/Top_Selling_Categories.php", function (data) {
-            data = $.parseJSON(data);
-            console.log(data);
-            // Sort the data array based on DAILY_ORDERS in descending order
-            data.sort(function(a, b) {
-                return parseFloat(b.DAILY_ORDERS) - parseFloat(a.DAILY_ORDERS);
-            });
-            console.log(data);
-            for (i = 0; i < data.length; i++) {
-
-                if (i == 0){
-                    document.querySelector("span[id='biggest'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-1").innerHTML = `${data[i]["planType"]} pkg`;
-
-                }
-                else if (i == 1){
-                    document.querySelector("span[id='bigger'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-2").innerHTML = `${data[i]["planType"]} pkg`;
-
-                }
-                else if (i == 2){
-                    document.querySelector("span[id='big'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-3").innerHTML = `${data[i]["planType"]} pkg`;
-                }
-            }
-
-        });
-
-    }
-
-    // Define a variable to keep track of the number of polls
-    var pollCountSales = 0;
-
-    // Define a function to load dashboard categories
-    function load_sales_dash() {
-        // Check if the poll count has reached 15
-        if (pollCountSales >= 15) {
-            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
-            return;
         }
+    });
+}
+
+callCategoriesDB = function (){
+    $.get("SalesDashboard/Top_Selling_Categories.php", function (data) {
+        data = $.parseJSON(data);
+        console.log(data);
+        // Sort the data array based on DAILY_ORDERS in descending order
+        data.sort(function(a, b) {
+            return parseFloat(b.DAILY_ORDERS) - parseFloat(a.DAILY_ORDERS);
+        });
+        console.log(data);
+        for (i = 0; i < data.length; i++) {
+
+            if (i == 0){
+                document.querySelector("span[id='biggest'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                document.querySelector("#category-1").innerHTML = `${data[i]["planType"]} pkg`;
+
+            }
+            else if (i == 1){
+                document.querySelector("span[id='bigger'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                document.querySelector("#category-2").innerHTML = `${data[i]["planType"]} pkg`;
+
+            }
+            else if (i == 2){
+                document.querySelector("span[id='big'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
+                document.querySelector("#category-3").innerHTML = `${data[i]["planType"]} pkg`;
+            }
+        }
+
+    });
+
+}
+
+// Define a variable to keep track of the number of polls
+var pollCountSales = 0;
+
+// Define a function to load dashboard categories
+function load_sales_dash() {
+    // Check if the poll count has reached 15
+    if (pollCountSales >= 15) {
+        console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+    }
 
     if (pollCountSales <= 1)
     {
@@ -711,120 +727,120 @@ echo '<a href="logout.php">Log Out</a></div>';
         callSalesDB();
     }
 
-        // Increment the poll count
-        pollCountSales++;
+    // Increment the poll count
+    pollCountSales++;
 
-        // Call a function to generate a random sleep time
-        var randomSleepTime = getRandomSleepTime();
-        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+    // Call a function to generate a random sleep time
+    var randomSleepTime = getRandomSleepTime();
+    console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
 
-        // Use setTimeout to introduce a random sleep time before each poll
-        setTimeout(function() {
-            // Place your database polling code here
-            // For now, I'll just log a message
-            console.log("Polling database...");
+    // Use setTimeout to introduce a random sleep time before each poll
+    setTimeout(function() {
+        // Place your database polling code here
+        // For now, I'll just log a message
+        console.log("Polling database...");
 
-            callSalesDB();
+        callSalesDB();
 
-            // Call the function recursively after the sleep time
-            load_sales_dash();
-        }, randomSleepTime);
-    }
-
-    // Function to generate a random sleep time between 1 and 10 seconds
-    function getRandomSleepTime() {
-        return Math.floor(Math.random() * 10000) + 1000; // Random number between 1000 and 10000 milliseconds (1 to 10 seconds)
-    }
-
-    // Call the load_dash_categories function to start polling
-    // load_dash_categories();
-    // ------------------------------Start Handles Billing Categories --------------------------
-    var pollCountCategories = 0;
-
-    // Define a function to load dashboard categories
-    function load_categories_dash() {
-        // Check if the poll count has reached 15
-        if (pollCountCategories >= 15) {
-            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
-            return;
-        }
-
-        if (pollCountCategories <= 1)
-        {
-            console.info("Loading Database Information Before Introducing polling........");
-            callCategoriesDB();
-        }
-
-        // Increment the poll count
-        pollCountCategories++;
-
-        // Call a function to generate a random sleep time
-        var randomSleepTime = getRandomSleepTime();
-        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
-
-        // Use setTimeout to introduce a random sleep time before each poll
-        setTimeout(function() {
-            // Place your database polling code here
-            // For now, I'll just log a message
-            console.log("Polling database...");
-
-            callCategoriesDB();
-
-            // Call the function recursively after the sleep time
-            load_categories_dash();
-        }, randomSleepTime);
-    }
-
-    // Define a variable to keep track of the number of polls
-    var pollCount7daySales = 0;
-
-    // Define a function to load dashboard categories
-    function load_7daysales_dash() {
-        // Check if the poll count has reached 15
-        if (pollCount7daySales >= 15) {
-            console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
-            return;
-        }
-
-        if (pollCount7daySales <= 1)
-        {
-            console.info("Loading Database Information Before Introducing polling........");
-            call7DaySalesDB();
-        }
-
-        // Increment the poll count
-        pollCount7daySales++;
-
-        // Call a function to generate a random sleep time
-        var randomSleepTime = getRandomSleepTime();
-        console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
-
-        // Use setTimeout to introduce a random sleep time before each poll
-        setTimeout(function() {
-            // Place your database polling code here
-            // For now, I'll just log a message
-            console.log("Polling database...");
-
-            call7DaySalesDB();
-
-            // Call the function recursively after the sleep time
-            load_7daysales_dash();
-        }, randomSleepTime);
-    }
-
-    // ------------------------------END Handles Billing Categories --------------------------
-
-    $(document).ready(function () {
+        // Call the function recursively after the sleep time
         load_sales_dash();
-        load_7daysales_dash();
+    }, randomSleepTime);
+}
+
+// Function to generate a random sleep time between 1 and 10 seconds
+function getRandomSleepTime() {
+    return Math.floor(Math.random() * 10000) + 1000; // Random number between 1000 and 10000 milliseconds (1 to 10 seconds)
+}
+
+// Call the load_dash_categories function to start polling
+// load_dash_categories();
+// ------------------------------Start Handles Billing Categories --------------------------
+var pollCountCategories = 0;
+
+// Define a function to load dashboard categories
+function load_categories_dash() {
+    // Check if the poll count has reached 15
+    if (pollCountCategories >= 15) {
+        console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+    }
+
+    if (pollCountCategories <= 1)
+    {
+        console.info("Loading Database Information Before Introducing polling........");
+        callCategoriesDB();
+    }
+
+    // Increment the poll count
+    pollCountCategories++;
+
+    // Call a function to generate a random sleep time
+    var randomSleepTime = getRandomSleepTime();
+    console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+
+    // Use setTimeout to introduce a random sleep time before each poll
+    setTimeout(function() {
+        // Place your database polling code here
+        // For now, I'll just log a message
+        console.log("Polling database...");
+
+        callCategoriesDB();
+
+        // Call the function recursively after the sleep time
         load_categories_dash();
-    });
+    }, randomSleepTime);
+}
+
+// Define a variable to keep track of the number of polls
+var pollCount7daySales = 0;
+
+// Define a function to load dashboard categories
+function load_7daysales_dash() {
+    // Check if the poll count has reached 15
+    if (pollCount7daySales >= 15) {
+        console.log("Max Polling of 15 times reached UPdate UI by displaying a refresh button.")
+            return;
+    }
+
+    if (pollCount7daySales <= 1)
+    {
+        console.info("Loading Database Information Before Introducing polling........");
+        call7DaySalesDB();
+    }
+
+    // Increment the poll count
+    pollCount7daySales++;
+
+    // Call a function to generate a random sleep time
+    var randomSleepTime = getRandomSleepTime();
+    console.info("Browser will sleep for "+ randomSleepTime/1000 + " Seconds");
+
+    // Use setTimeout to introduce a random sleep time before each poll
+    setTimeout(function() {
+        // Place your database polling code here
+        // For now, I'll just log a message
+        console.log("Polling database...");
+
+        call7DaySalesDB();
+
+        // Call the function recursively after the sleep time
+        load_7daysales_dash();
+    }, randomSleepTime);
+}
+
+// ------------------------------END Handles Billing Categories --------------------------
+
+$(document).ready(function () {
+    load_sales_dash();
+    load_7daysales_dash();
+    load_categories_dash();
+});
 
 
 </script>
-
+<script type="text/javascript" src="./static/scripts/update-price.js" />
 
 </body>
-</html>
+    </html>
 
-<!-- Your page content here -->
+    <!-- Your page content here -->
