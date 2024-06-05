@@ -14,13 +14,15 @@
  * todo: secure the generation auto_increment ids in columns to make use of uuid4 from 'get_uuid.php' instead of use of predictable sequence numbers 1,2,3...n
  */
 // Define constants for database configuration
-define('DB_SERVER', 'localhost');
-//define('DB_SERVER', '192.168.1.2');
+//define('DB_SERVER', 'localhost');
+//define('DB_SERVER', 'paywifigo.me');
+define('DB_SERVER', '127.0.0.1');
 //define('DB_SERVER', '192.168.43.110');
-//define('DB_USERNAME', 'root');
-define('DB_USERNAME', 'radius');
-//define('DB_PASSWORD', 'usbw');
-define('DB_PASSWORD', 'radpass');
+define('DB_USERNAME', 'root');
+//define('DB_USERNAME', 'dev');
+define('DB_PASSWORD', 'usbw');
+//define('DB_PASSWORD', 'S@Xh89xwed');
+//define('DB_PASSWORD', 'radpass');
 define('DB_NAME', 'radius');
 define('MOVIES_PER_PAGE', 4); // Defines the Number of Movies to be displayed per page
 
