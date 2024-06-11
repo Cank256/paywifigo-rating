@@ -447,11 +447,11 @@ foreach ($results as $result)
                     <div class="quantity">
                       <input
                         class="quantity-input"
-                        max="100"
+                        max={$result["price"]}
                         min="0"
                         step="1"
                         type="number"
-                        value="100"
+                        value={$result["price"]}
                       />
                     <div class="quantity-nav">
                     <div class="quantity-button quantity-up">
@@ -462,7 +462,7 @@ foreach ($results as $result)
                          </div>
                          </div>
                             </div>
-                    <div class="veeam-footnote">* Maximum of 100 percent.</div>
+                    <div class="veeam-footnote hidden">* price should be less than {$result["price"]} and greater than 0.</div>
                   </div>
                   <div class="col">
                     <div class="veeam-total" data-price={$result["price"]}>

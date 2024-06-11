@@ -2,14 +2,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const editIcons = document.querySelectorAll(".list-item .edit-icon");
   const saveButtons = document.querySelectorAll(".list-item .save");
 
-  function updatePlanCost(id, planCost, priceElem) {
+  function updatePlanCost(id, planCost, priceElem, elemId) {
     $.ajax({
       url: "SalesDashboard/update_billing_plans.php",
       method: "POST",
       data: {id, planCost},
       success: function(data) {
-        console.log(data)
-        priceElem.text(planCost.toFixed(2));
+        $(`#${elemId}`).find(".veeam-total").data("price", planCost);
+        priceElem.text(planCost);
+        console.log(data, $(`#${elemId}`).find(".veeam-total"))
       },
       error: function(jqXHR) {
         console.log(jqXHR.responseText);
@@ -52,13 +53,18 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const input = $(inputParent).find(".quantity-input");
       const inputValue = parseInt(input.val());
-      const price = parseFloat($(inputParent).find(".veeam-total").data("price"));
+      const price = parseInt($(inputParent).find(".veeam-total").data("price"));
+      const infoElem = $(inputParent).find(".veeam-footnote");
       const priceElem = $(inputParent).find(".price__cont");
 
-      if (inputValue <= 99) {
-        calcPrice = inputValue + 1;
+      if (inputValue < price) {
+        const calcPrice = inputValue + 1;
+
         input.val(calcPrice);
-        priceElem.text(`${((calcPrice / 100) * price).toFixed(2)}`);
+        priceElem.text(`${calcPrice}`);
+        infoElem.addClass("hidden");
+      } else {
+        infoElem.removeClass("hidden");
       }
     })
 
@@ -66,13 +72,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const input = $(inputParent).find(".quantity-input");
       const inputValue = parseInt(input.val());
-      const price = parseFloat($(inputParent).find(".veeam-total").data("price"));
       const priceElem = $(inputParent).find(".price__cont");
+      const infoElem = $(inputParent).find(".veeam-footnote");
 
-      if (inputValue >= 1) {
-        calcPrice = inputValue - 1;
+      if (inputValue > 0) {
+        const calcPrice = inputValue - 1;
+
         input.val(calcPrice);
-        priceElem.text(`${((calcPrice / 100) * price).toFixed(2)}`);
+        priceElem.text(`${calcPrice}`);
+        infoElem.addClass("hidden");
+      } else {
+        infoElem.removeClass("hidden");
       }
     })
 
@@ -80,16 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const input = $(inputParent).find(".quantity-input");
       let inputValue = parseInt(input.val());
-      const price = parseFloat($(inputParent).find(".veeam-total").data("price"));
+      const price = parseInt($(inputParent).find(".veeam-total").data("price"));
       const priceElem = $(inputParent).find(".price__cont");
+      const infoElem = $(inputParent).find(".veeam-footnote");
 
-      if (inputValue && !(inputValue >= 0 && inputValue <= 100)) {
-        inputValue = 100;
+      if (inputValue && !(inputValue >= 0 && inputValue <= price)) {
+        inputValue = price;
+        infoElem.removeClass("hidden")
+      } else {
+        infoElem.addClass("hidden")
       }
 
       if (inputValue) {
         input.val(inputValue);
-        priceElem.text(`${((inputValue / 100) * price).toFixed(2)}`);
+        priceElem.text(`${inputValue}`);
       }
     })
 
@@ -97,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const updatePrice = $(inputParent).find(".currency_price");
       const priceElem = $(inputParent).find(".price__cont");
-      updatePlanCost(idNum, parseFloat(priceElem.text()), updatePrice);
+      updatePlanCost(idNum, parseInt(priceElem.text()), updatePrice, elemId);
     })
   })
 });

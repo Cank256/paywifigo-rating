@@ -11,29 +11,35 @@ $stmt = null;
 
 try {
     $conn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
-    echo "Connected Successfully";
 } catch (PDOException $e) {
     die("Error Connecting " . $e->getMessage());
 }
 
 $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
-$planCost = filter_var($_POST['planCost'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+$planCost = filter_var($_POST['planCost'], FILTER_SANITIZE_NUMBER_INT);
 $sql = null;
 
 if ($id && $planCost) {
-    echo "id: $id, planCost: $planCost\n";
-    $sql = "UPDATE billing_plans 
-                SET 
-                planCost = :planCost 
-                WHERE 
-                bp_id = :bp_id AND planCost > :planCost
-            ";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([":planCost" => $planCost, ":bp_id" => $id]);
-    $stmt->closeCursor();
-    $conn = null;
-    http_response_code(200);
-    exit();
+    try {
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = "UPDATE billing_plans 
+            SET 
+            planCost = :planCost 
+            WHERE 
+            bp_id = :bp_id
+";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":planCost", $planCost);
+        $stmt->bindParam(":bp_id", $bp_id);
+        $stmt->execute();
+        echo json_encode(["planCost" => $planCost, "bp_id" => $id]);
+        http_response_code(200);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo "Internal Server Error";
+        echo json_encode($e->getMessage());
+    }
 } else {
     http_response_code(400);
     echo "Bad Request";
