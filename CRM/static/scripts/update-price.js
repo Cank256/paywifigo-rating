@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
       success: function(data) {
         $(`#${elemId}`).find(".veeam-total").data("price", planCost);
         priceElem.text(planCost);
-        console.log(data, $(`#${elemId}`).find(".veeam-total"))
+        console.log(data)
       },
       error: function(jqXHR) {
         console.log(jqXHR.responseText);

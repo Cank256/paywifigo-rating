@@ -16,24 +16,24 @@ try {
 }
 
 $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
-$planCost = filter_var($_POST['planCost'], FILTER_SANITIZE_NUMBER_INT);
+$price = filter_var($_POST['planCost'], FILTER_SANITIZE_NUMBER_INT);
 $sql = null;
 
-if ($id && $planCost) {
+if ($id && $price) {
     try {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = "UPDATE billing_plans 
+        $sql = "UPDATE `billing_plans` 
             SET 
-            planCost = :planCost 
+            `planCost` = :price
             WHERE 
-            bp_id = :bp_id
+            `bp_id` = :id
 ";
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(":planCost", $planCost);
-        $stmt->bindParam(":bp_id", $bp_id);
+        $stmt->bindParam(":price", $price);
+        $stmt->bindParam(":id", $id);
         $stmt->execute();
-        echo json_encode(["planCost" => $planCost, "bp_id" => $id]);
+        echo json_encode(["planCost" => $price, "bp_id" => $id]);
         http_response_code(200);
     } catch (PDOException $e) {
         http_response_code(500);
