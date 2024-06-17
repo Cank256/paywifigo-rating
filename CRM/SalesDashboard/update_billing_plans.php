@@ -19,7 +19,7 @@ $id = filter_var($_POST['id'], FILTER_SANITIZE_NUMBER_INT);
 $price = filter_var($_POST['planCost'], FILTER_SANITIZE_NUMBER_INT);
 $sql = null;
 
-if ($id && $price) {
+if ($id && $price && $price > 0) {
     try {
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 

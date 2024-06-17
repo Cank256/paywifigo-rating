@@ -50,7 +50,7 @@ echo '<a href="logout.php">Log Out</a></div>';
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./update_price.css" />
+    <link rel="stylesheet" href="./static/styles/update_price.css" />
 </head>
 <body >
 <!-- partial:index.partial.html -->
@@ -432,14 +432,16 @@ foreach ($results as $result)
           </section>
           <section class="hidden_section hidden">
             <form method="UPDATE">
-              <button class="save save__price" type="submit">Save</button>
-              <!-- partial:index.partial.html -->
+                <div>
+                    <button class="save save__price" type="submit">Save</button>
+                    <button class="cancel cancel__price">Cancel</button> 
+                </div>
               <div>
                 <div
                   id="curr_product"
                   style="text-align: center; vertical-align: middle"
                 >
-                  Product
+                    {$result["name"]}
                 </div>
                 <div class="veeam-license-wrap">
                   <div class="col border-right">

@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   const editIcons = document.querySelectorAll(".list-item .edit-icon");
   const saveButtons = document.querySelectorAll(".list-item .save");
+  const cancelButtons = document.querySelectorAll(".list-item .cancel");
 
   function updatePlanCost(id, planCost, priceElem, elemId) {
     $.ajax({
@@ -21,9 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function switchToEdit(e) {
     e.preventDefault();
     e.stopPropagation();
-    const elemContainer = this.parentElement.parentElement;
+    const elemContainer = $(this).parents(".list-item__inner")[0];
 
-    if (elemContainer.classList.contains("list-item__inner")) {
+    if (elemContainer) {
       const hiddenElem = elemContainer.parentElement.querySelector(".hidden");
 
       elemContainer.classList.remove("list-item__inner");
@@ -44,6 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
     saveButton.addEventListener("click", switchToEdit);
   }
 
+  for(const cancelButton of cancelButtons) {
+    cancelButton.addEventListener("click", switchToEdit);
+  }
 
   $(".list-item").each(function(_, elem) {
     const elemId = $(elem).data("id");
@@ -53,19 +57,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const input = $(inputParent).find(".quantity-input");
       const inputValue = parseInt(input.val());
-      const price = parseInt($(inputParent).find(".veeam-total").data("price"));
-      const infoElem = $(inputParent).find(".veeam-footnote");
+      // const price = parseInt($(inputParent).find(".veeam-total").data("price"));
+      // const infoElem = $(inputParent).find(".veeam-footnote");
       const priceElem = $(inputParent).find(".price__cont");
 
-      if (inputValue < price) {
-        const calcPrice = inputValue + 1;
+      const calcPrice = inputValue + 1;
 
-        input.val(calcPrice);
-        priceElem.text(`${calcPrice}`);
-        infoElem.addClass("hidden");
-      } else {
-        infoElem.removeClass("hidden");
-      }
+      input.val(calcPrice);
+      priceElem.text(`${calcPrice}`);
+      // if (inputValue < price) {
+        //   const calcPrice = inputValue + 1;
+        //
+          //   input.val(calcPrice);
+        //   priceElem.text(`${calcPrice}`);
+        //   infoElem.addClass("hidden");
+        // } else {
+          //   infoElem.removeClass("hidden");
+          // }
     })
 
     $(`#${elemId} .hidden_section .quantity-down`).on("click", function() {
@@ -73,16 +81,16 @@ document.addEventListener("DOMContentLoaded", function () {
       const input = $(inputParent).find(".quantity-input");
       const inputValue = parseInt(input.val());
       const priceElem = $(inputParent).find(".price__cont");
-      const infoElem = $(inputParent).find(".veeam-footnote");
 
-      if (inputValue > 0) {
-        const calcPrice = inputValue - 1;
-
+      const calcPrice = inputValue - 1;
+      if (calcPrice >= 0)
+      {
         input.val(calcPrice);
         priceElem.text(`${calcPrice}`);
-        infoElem.addClass("hidden");
       } else {
-        infoElem.removeClass("hidden");
+        calcPrice = 0;
+        input.val(calcPrice);
+        priceElem.text(`${calcPrice}`);
       }
     })
 
@@ -90,18 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const inputParent = $(this).parents(`#${elemId}`)[0];
       const input = $(inputParent).find(".quantity-input");
       let inputValue = parseInt(input.val());
-      const price = parseInt($(inputParent).find(".veeam-total").data("price"));
       const priceElem = $(inputParent).find(".price__cont");
-      const infoElem = $(inputParent).find(".veeam-footnote");
 
-      if (inputValue && !(inputValue >= 0 && inputValue <= price)) {
-        inputValue = price;
-        infoElem.removeClass("hidden")
+      if (inputValue && inputValue >= 0) {
+        input.val(inputValue);
+        priceElem.text(`${inputValue}`);
       } else {
-        infoElem.addClass("hidden")
-      }
-
-      if (inputValue) {
+        inputValue = 0;
         input.val(inputValue);
         priceElem.text(`${inputValue}`);
       }
