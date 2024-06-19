@@ -842,5 +842,3 @@ $(document).ready(function () {
 
 </body>
     </html>
-
-    <!-- Your page content here -->

@@ -21,7 +21,6 @@ if (isset($_SESSION['referer']))
 
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-        // Imports database Contants
         require_once 'moviefi.conf.php';
 
 // Create connection
