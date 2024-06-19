@@ -4,7 +4,7 @@ global $configValues;
 $dbName = $configValues['CONFIG_DB_NAME'];
 $dbHost = $configValues['CONFIG_DB_HOST'];
 $dbUser = $configValues['CONFIG_DB_USER'];
-/** @var TYPE_NAME $dbPass */
+/** @var String $dbPass */
 $dbPass = $configValues['CONFIG_DB_PASS'];
 
 $last_session_id = null;

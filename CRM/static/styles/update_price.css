@@ -1,0 +1,331 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.update__price {
+  width: 100%;
+  height: 100%;
+}
+
+.img {
+  width: 80px;
+  height: 80px;
+}
+.lists {
+  width: 600px;
+  padding: 20px 15px;
+  margin: 4em auto;
+  box-shadow: 0 0 10px gray;
+  border-radius: 30px;
+}
+
+.list-item {
+  flex: initial;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 1em;
+}
+
+aside .large {
+  font-size: 1.1em;
+}
+
+.list-item__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item__inner > div {
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.list-item-desc {
+  margin-left: 0.8em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-item-desc center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid green;
+}
+
+.list-item-desc h2 {
+  color: red;
+}
+
+.list-item__inner svg {
+  cursor: pointer;
+  /*width: 1.5em;*/
+  /*height: 1.5em;*/
+    background-color: #f2f344;
+  font-size: 1.5em;
+  border: 1px solid gray;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.list-item aside {
+  font-weight: 500;
+  font-size: 1.2em;
+  margin: 0 0.5em;
+}
+
+aside h2 {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.list-item__inner form {
+  display: contents;
+}
+
+.list-item__inner button {
+  height: max-content;
+  padding: 0.5rem;
+  background: green;
+  color: white;
+  font-size: 15px;
+  padding: 8px 25px;
+  box-shadow: none;
+  border: 1px solid orange;
+  margin: 0.5em;
+  border-radius: 15px;
+  font-size: 1.2em;
+}
+
+
+
+body {
+    font-family: "Open Sans", arial, sans-serif;
+}
+
+.veeam-license-wrap {
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+}
+.veeam-license-wrap h3 {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #222;
+    margin: 1.5rem 0 2rem;
+    letter-spacing: -0.5px;
+}
+.veeam-license-wrap .col {
+    flex: 1;
+    padding: 0 2rem;
+}
+.veeam-license-wrap .border-right {
+    border-right: 1px solid #eee;
+}
+.veeam-license-wrap .veeam-footnote {
+    padding: 0.5rem 0;
+    clear: both;
+    font-size: 12px;
+    color: #999;
+}
+.veeam-license-wrap .veeam-price {
+    font-size: 62px;
+    line-height: 1;
+    color: #222;
+}
+.veeam-license-wrap input[type=number]::-webkit-inner-spin-button,
+.veeam-license-wrap input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0 !important;
+}
+.veeam-license-wrap input[type=number] {
+    -moz-appearance: textfield;
+}
+.veeam-license-wrap .quantity {
+    position: relative;
+}
+.veeam-license-wrap .quantity .quantity-input {
+    font: normal 600 28px "Open Sans", arial, sans-serif;
+    /*width: 175px !important;*/
+    height: 65px !important;
+    line-height: 1.65;
+    /*float: left;*/
+    display: block;
+    padding: 0;
+    background: #fff !important;
+    margin: 0 !important;
+    border: 3px solid #eee !important;
+    border-right: 0 !important;
+    text-align: center;
+    border-radius: 4px 0 0 4px;
+    color: #222 !important;
+}
+.veeam-license-wrap .quantity .quantity-input:focus {
+    outline: 0;
+    box-shadow: none;
+}
+.veeam-license-wrap .quantity .quantity-nav {
+    float: left;
+    position: relative;
+    height: 62px;
+}
+.veeam-license-wrap .quantity .quantity-button {
+    position: relative;
+    cursor: pointer;
+    width: 20px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    line-height: 62px;
+    user-select: none;
+    right: 0;
+    width: 60px;
+    height: 62px;
+    background: #fdb022;
+    border: 2px solid #fdb022;
+    box-shadow: 0 3px 0 0 #ea9802;
+}
+.veeam-license-wrap .quantity .quantity-button:active {
+    top: 3px;
+    box-shadow: none;
+}
+.veeam-license-wrap .quantity .quantity-button:hover {
+    background-color: #f49f02;
+    border-color: #f49f02;
+}
+.veeam-license-wrap .quantity .quantity-button.quantity-up {
+    position: absolute;
+    transform: translateX(200%);
+    border-radius: 0 4px 4px 0;
+}
+.veeam-license-wrap .quantity .quantity-button.quantity-down {
+    position: absolute;
+    transform: translateX(100%);
+}
+.veeam-license-wrap .limit-reached {
+    clear: both;
+    font-size: 85%;
+    color: red;
+    display: none;
+}
+.veeam-license-wrap label {
+    margin-right: 1rem;
+}
+.veeam-license-wrap .btn-yellow {
+    background-color: #fdb022;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    box-shadow: 0 3px 0 0 #ea9802;
+    color: #fff;
+    font: 600 14px/1 "Open Sans", sans-serif;
+    margin: 3rem 0 0;
+    cursor: pointer;
+}
+.veeam-license-wrap .btn-yellow:hover {
+    background-color: #f49f02;
+}
+.veeam-license-wrap .btn-yellow:active {
+    position: relative;
+    top: 3px;
+    box-shadow: none;
+}
+.veeam-license-wrap .radio {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px !important;
+    font-weight: normal !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.veeam-license-wrap .radio:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+.veeam-license-wrap .radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+.veeam-license-wrap .radio input:checked ~ .checkmark {
+    background-color: #fdb022;
+}
+.veeam-license-wrap .radio input:checked ~ .checkmark:after {
+    display: block;
+}
+.veeam-license-wrap .radio .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+.veeam-license-wrap .radio .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+.veeam-license-wrap .contact {
+    display: none;
+}
+.veeam-license-wrap .contact p {
+    margin: 0;
+}
+.veeam-license-wrap .annual-txt {
+    margin-top: 0.5rem;
+    display: none;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.list-item__inner .cancel {
+  background: #fa5137;
+}
