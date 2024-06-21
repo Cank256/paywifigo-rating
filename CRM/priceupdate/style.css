@@ -329,3 +329,7 @@ body {
     font-size: 14px;
     color: #aaa;
 }
+
+.list-item__inner .cancel {
+  background: #fa5137;
+} 

@@ -376,29 +376,29 @@ echo '<a href="logout.php">Log Out</a>';
     <div class="db__cell">
         <h2 class="db__subheading">Modify Product Pricing</h2>
         <main class="update__price">
-            <ul class="lists">
-                <?php
-                global $configValues;
-                require_once 'WifiProfiles/configs.php';
+    <ul class="lists">
+<?php
+global $configValues;
+require_once 'WifiProfiles/configs.php';
 
-                mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-                $mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+$mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
 
-                if ($mysqli->connect_error) {
-                    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
-                }
+if ($mysqli->connect_error) {
+    die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
 
-                $sql = "SELECT planName as name, creationdate as datetime, planCost as price, planCurrency as currency, bp_id as id   
+$sql = "SELECT planName as name, creationdate as datetime, planCost as price, planCurrency as currency, bp_id as id   
     FROM 
     billing_plans
 ";
-                $results = $mysqli->query($sql);
+$results = $mysqli->query($sql);
 
-                foreach ($results as $result)
-                {
-                    $created_at = date_format(date_create($result["datetime"]), "M j \a\\t h:ia");
-                    $id = str_replace(" ", "_", $result["name"]);
-                    echo <<<HTML
+foreach ($results as $result) 
+{
+    $created_at = date_format(date_create($result["datetime"]), "M j \a\\t h:ia");
+    $id = str_replace(" ", "_", $result["name"]);
+    echo <<<HTML
          <li class="list-item" data-id=$id id=$id data-id_num={$result["id"]}>
           <section class="list-item__inner">
             <div>
@@ -411,9 +411,6 @@ echo '<a href="logout.php">Log Out</a>';
                 <path
                   d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z"
                 />
-                <span style="color: #e7e3cb; text-decoration: underline">
-                  Edit
-                </span>
               </svg>
               <div class="list-item-desc">
                 <div class="center">
@@ -425,23 +422,23 @@ echo '<a href="logout.php">Log Out</a>';
 
             <aside>
               <h2 class="price__value">
-                <span style="color: #f7f609;" class="veeam-price">{$result["currency"]}</span>
-                <span style="color: #f7f609;" class="currency_price"> {$result["price"]} </span>
+                <span class="veeam-price">{$result["currency"]}</span>
+                <span class="currency_price"> {$result["price"]} </span>
               </h2>
             </aside>
           </section>
           <section class="hidden_section hidden">
-          <button class="cancel save__price" type="submit">Cancel</button>
             <form method="UPDATE">
-              
-              <button class="save save__price" type="submit">Save</button>
-              <!-- partial:index.partial.html -->
+                <div>
+                    <button class="save save__price" type="submit">Save</button>
+                    <button class="cancel cancel__price">Cancel</button> 
+                </div>
               <div>
                 <div
                   id="curr_product"
                   style="text-align: center; vertical-align: middle"
                 >
-                  Product
+                    {$result["name"]}
                 </div>
                 <div class="veeam-license-wrap">
                   <div class="col border-right">
@@ -449,11 +446,11 @@ echo '<a href="logout.php">Log Out</a>';
                     <div class="quantity">
                       <input
                         class="quantity-input"
-                        max="100"
+                        max={$result["price"]}
                         min="0"
                         step="1"
                         type="number"
-                        value="100"
+                        value={$result["price"]}
                       />
                     <div class="quantity-nav">
                     <div class="quantity-button quantity-up">
@@ -464,7 +461,7 @@ echo '<a href="logout.php">Log Out</a>';
                          </div>
                          </div>
                             </div>
-                   
+                    <div class="veeam-footnote hidden">* price should be less than {$result["price"]} and greater than 0.</div>
                   </div>
                   <div class="col">
                     <div class="veeam-total" data-price={$result["price"]}>
@@ -481,115 +478,13 @@ echo '<a href="logout.php">Log Out</a>';
           </section>
         </li> 
 HTML;
-                }
-                ?>
-            </ul>
-        </main>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#smartphone" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPhone 13<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$599.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#laptop" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Macbook Air 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1199.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#pants" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Denim #142 Light Blue<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$44.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#shirt" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                White Blouse<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$54.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#monitor" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iMac 2022<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$1,699.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#tablet" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                iPad Air 5<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$549.99</strong></div>
-        </div>
-        <div class="db__order">
-            <div class="db__order-cat">
-                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#hat" />
-                </svg>
-            </div>
-            <div class="db__order-name">
-                Fedora Hat<br>
-                <small>
-                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>
-                </small>
-            </div>
-            <div><strong>$224.99</strong></div>
-        </div>
-
-
-
-    </div>
+} 
+?>
+      </ul>
+    </main> 
 </main>
 <!-- partial -->
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>-->
-<script src="priceupdate/script.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="./static/scripts/update-price.js" />
 </body>
 </html>
