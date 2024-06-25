@@ -22,7 +22,7 @@ if (isset($_SESSION['user_data'])) {
     $hotspot_owner_id = $data['hotspot_owner_id'];
 
     // Use the data as needed.
-    echo "<div style='background-color: black' >Username: $username, Email: $hotspot_owner_id ";
+    echo "<div style='color:white;background-color: black' >Username: $username, Email: $hotspot_owner_id ";
 } else {
     // The array doesn't exist in the session.
     echo "User data not found in the session.";

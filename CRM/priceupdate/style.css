@@ -86,7 +86,8 @@ aside .large {
 }
 
 .list-item-desc h2 {
-    color: #f8b63b;
+    /*color: #f8b63b;*/
+    color: #122af7;
 }
 
 .list-item__inner svg {

@@ -352,22 +352,22 @@ echo '<a href="logout.php">Log Out</a>';
         </table>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Product Price Preview</h2>
+        <h2 class="db__subheading">Product Performance May,2024</h2>
 
         <div class="db__bubbles">
             <div class="db__bubble">
 				<span class="db__bubble-text">
-					Electronic<br><strong class="db__bubble-value">4,183</strong><br>per day
+					Gross<br><strong class="db__bubble-value">$4,183</strong><br>per month
 				</span>
             </div>
             <div class="db__bubble">
 				<span class="db__bubble-text">
-					Fashion<br><strong class="db__bubble-value">2,215</strong><br>per day
+					Expenses<br><strong class="db__bubble-value">$2,215</strong><br>per month
 				</span>
             </div>
             <div class="db__bubble">
 				<span class="db__bubble-text">
-					Books<br><strong class="db__bubble-value">1,012</strong><br>per day
+					Net Income<br><strong class="db__bubble-value">$1,012</strong><br>per month
 				</span>
             </div>
         </div>
