@@ -8,6 +8,7 @@ try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
+
 if(!isset($_SESSION)) { session_start(); }
 
 if (!isset($_SESSION['user_data'])) {

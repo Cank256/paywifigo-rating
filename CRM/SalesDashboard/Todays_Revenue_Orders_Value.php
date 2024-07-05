@@ -59,7 +59,7 @@ yesterday_date, (select coalesce(sum(amount),0.00) from payment where creationda
 //            $keycloak_id = $counter[0];
 //            $Purchase_Profile_id = $counter[1];
         $retarray = $counter;
-//        echo "Something returnd";
+//        echo "Something return";
         $con = null;
 
     }
