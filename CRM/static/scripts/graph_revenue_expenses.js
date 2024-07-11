@@ -67,5 +67,5 @@ $(document).ready(function(){
   }
 
 
-new Chart(ctx, config);
+  new Chart(ctx, config);
 })

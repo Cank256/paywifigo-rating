@@ -1,0 +1,1 @@
+{"timestamp":1720189302,"HOST":"localhost:5000","REQUEST_URI":"\/login.php","requestType":"POST","query":{"CSRF_TKN_WIFIGO":"e3c22e2690","username":"+2547026144203","password":"    ","submit":"1"},"cookie":{"PHPSESSID":"rofipb9bg1t7e50m6rstltd5h6","CSRF_TKN_WIFIGO":"e3c22e2690"}}
