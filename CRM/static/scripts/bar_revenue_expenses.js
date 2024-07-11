@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  const ctx = $('#revenueAndExpenses');
+  const ctx = $('#barNetRevnueAndEx');
 
   Chart.defaults.color = '#fff';
   Chart.defaults.borderColor = '#fff';
@@ -18,20 +18,34 @@ $(document).ready(function(){
   const data = {
     datasets: [
       {
-        label: 'Revenue',
-        data: generateChartData(10, 100, 1000),
+        label: 'Profit',
+        data: generateChartData(1, 100, 1000),
       },
       {
         label: 'Expenses',
-        data: generateChartData(10, 100, 1000),
+        showLine: true,
+        data: generateChartData(1, -1000, 1000),
+      },
+      {
+        label: 'Net Loss',
+        data: generateChartData(1, -1000, 1000),
+      },
+      {
+        label: 'Net Profit',
+        data: generateChartData(1, -1000, 1000),
       }
     ]
   }
 
   const config = {
-    type: "line",
+    type: "bar",
     data: data,
     options: {
+      layout: {
+        padding: {
+          left: 10
+        }
+      },
       responsive: true,
       interaction: {
         mode: 'index',
@@ -40,10 +54,10 @@ $(document).ready(function(){
       stacked: false,
 
       plugins: {
-        // title: {
-        //   display: true,
-        //   text: 'Revenue and Expenses'
-        // },
+        title: {
+          display: true,
+          text: 'Revenue and Expenses'
+        },
         colors: {
           enable: true
         }
