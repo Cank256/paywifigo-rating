@@ -34,7 +34,7 @@ CREATE TABLE `hotspot_per_owner_billing` (
   `wifigo_sales_fk_id` int NOT NULL,
   `planCost` int NOT NULL,
   `planTax` decimal(10,2) NOT NULL DEFAULT '0.00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `hotspot_per_owner_billing`

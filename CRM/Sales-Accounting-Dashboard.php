@@ -1,12 +1,14 @@
 <?php
-include_once __DIR__ .'/libs/csrf/csrfprotector.php';
+include_once __DIR__ . '/libs/csrf/csrfprotector.php';
 
 // Initialise CSRFProtector library
 try {
     csrfProtector::init();
 } catch (configFileNotFoundException $e) {
 }
-if(!isset($_SESSION)) { session_start(); }
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 if (!isset($_SESSION['user_data'])) {
     $_SESSION['referer'] = "Sales-Product-Performance-Dashboard.php";
@@ -36,7 +38,7 @@ echo '<a href="logout.php">Log Out</a>';
 
 <!-- Your page content here -->
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>CodePen - Sales Dashboard</title>
@@ -45,92 +47,92 @@ echo '<a href="logout.php">Log Out</a>';
     <link rel="stylesheet" href="./style.css">
 
     <script src="assets/js/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
-<script src="static/scripts/graph_revenue_expenses.js"></script>
-<script src="static/scripts/bar_revenue_expenses.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
+    <script src="static/scripts/graph_revenue_expenses.js"></script>
+    <script src="static/scripts/bar_revenue_expenses.js"></script>
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <svg display="none">
     <symbol id="calendar" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="8,1 8,6" />
-            <polyline points="16,1 16,6" />
-            <polyline points="2,10 22,10" />
-            <circle cx="7" cy="14" r="1" />
-            <circle cx="12" cy="14" r="1" />
-            <circle cx="17" cy="14" r="1" />
-            <circle cx="7" cy="19" r="1" />
-            <circle cx="12" cy="19" r="1" />
-            <circle cx="17" cy="19" r="1" />
-            <rect x="2" y="3" rx="3" ry="3" width="20" height="20" />
+            <polyline points="8,1 8,6"/>
+            <polyline points="16,1 16,6"/>
+            <polyline points="2,10 22,10"/>
+            <circle cx="7" cy="14" r="1"/>
+            <circle cx="12" cy="14" r="1"/>
+            <circle cx="17" cy="14" r="1"/>
+            <circle cx="7" cy="19" r="1"/>
+            <circle cx="12" cy="19" r="1"/>
+            <circle cx="17" cy="19" r="1"/>
+            <rect x="2" y="3" rx="3" ry="3" width="20" height="20"/>
         </g>
     </symbol>
     <symbol id="export" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="8,5 12,1 16,5" />
-            <polyline points="12,1 12,16" />
-            <rect x="2" y="10" rx="3" ry="3" width="20" height="13" />
+            <polyline points="8,5 12,1 16,5"/>
+            <polyline points="12,1 12,16"/>
+            <rect x="2" y="10" rx="3" ry="3" width="20" height="13"/>
         </g>
     </symbol>
     <symbol id="hat" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle r="8" cx="12" cy="14" stroke-dasharray="25.13 25.13" stroke-dashoffset="25.13" />
-            <polygon points="1,14 23,14" />
+            <circle r="8" cx="12" cy="14" stroke-dasharray="25.13 25.13" stroke-dashoffset="25.13"/>
+            <polygon points="1,14 23,14"/>
         </g>
     </symbol>
     <symbol id="laptop" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="2" rx="3" ry="3" width="18" height="12" />
-            <polygon points="3,14 21,14 23,22 1,22" />
+            <rect x="3" y="2" rx="3" ry="3" width="18" height="12"/>
+            <polygon points="3,14 21,14 23,22 1,22"/>
         </g>
     </symbol>
     <symbol id="monitor" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="1" y="1" rx="3" ry="3" width="22" height="16" />
-            <polyline points="1,12 22,12" />
-            <polyline points="12,19 12,21" />
-            <polyline points="6,23 18,23" />
+            <rect x="1" y="1" rx="3" ry="3" width="22" height="16"/>
+            <polyline points="1,12 22,12"/>
+            <polyline points="12,19 12,21"/>
+            <polyline points="6,23 18,23"/>
         </g>
     </symbol>
     <symbol id="pants" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="4,1 20,1 20,23 12,23 12,8 12,8 12,23 4,23" />
+            <polygon points="4,1 20,1 20,23 12,23 12,8 12,8 12,23 4,23"/>
         </g>
     </symbol>
     <symbol id="shirt" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="8,3 12,6 16,3 23,6 21,11 18,10 20,21 4,21 6,10 3,11 1,6" />
+            <polygon points="8,3 12,6 16,3 23,6 21,11 18,10 20,21 4,21 6,10 3,11 1,6"/>
         </g>
     </symbol>
     <symbol id="smartphone" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="1" rx="3" ry="3" width="16" height="22" />
-            <polyline points="10,6 14,6" />
-            <circle cx="12" cy="18" r="1" />
+            <rect x="4" y="1" rx="3" ry="3" width="16" height="22"/>
+            <polyline points="10,6 14,6"/>
+            <circle cx="12" cy="18" r="1"/>
         </g>
     </symbol>
     <symbol id="tablet" viewBox="0 0 24 24">
         <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="1" rx="3" ry="3" width="20" height="22" />
-            <circle cx="12" cy="18" r="1" />
+            <rect x="2" y="1" rx="3" ry="3" width="20" height="22"/>
+            <circle cx="12" cy="18" r="1"/>
         </g>
     </symbol>
 </svg>
 <main class="db">
     <div class="db__toolbar">
-        <h1 class="db__heading">Product Performance Management</h1>
+        <h1 class="db__heading">Product Sales Accounting Management</h1>
         <div class="db__toolbar-btns">
             <button class="db__select" type="button">
                 <svg class="db__select-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#calendar" />
+                    <use xlink:href="#calendar"/>
                 </svg>
                 Date
             </button>
             <button class="db__select" type="button">
                 <svg class="db__select-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#export" />
+                    <use xlink:href="#export"/>
                 </svg>
                 Export
             </button>
@@ -173,9 +175,11 @@ echo '<a href="logout.php">Log Out</a>';
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading" title="is the rate at which customers stop doing business with an entity">Revenue And Expenses</h2>
-        <canvas id="revenueAndExpenses" width="500" height="200" arial-label="Graph of Revenue And Expense" role="img" ></canvas>
-        </div>
+        <h2 class="db__subheading" title="is the rate at which customers stop doing business with an entity">Revenue And
+            Expenses</h2>
+        <canvas id="revenueAndExpenses" width="500" height="200" arial-label="Graph of Revenue And Expense"
+                role="img"></canvas>
+    </div>
     </div>
     <div class="db__cell">
         <h2 class="db__subheading">Accounts Payable (Sales & Marketing)</h2>
@@ -294,8 +298,9 @@ echo '<a href="logout.php">Log Out</a>';
     </div>
     <div class="db__cell">
         <h2 class="db__subheading">Product Price Preview</h2>
-        <div  class="db__bubbles">
-         <canvas id="barNetRevnueAndEx" width="500" height="200" arial-label="Barchart showing revenue expenses" role="img" ></canvas>    
+        <div class="db__bubbles">
+            <canvas id="barNetRevnueAndEx" width="500" height="200" arial-label="Barchart showing revenue expenses"
+                    role="img"></canvas>
         </div>
     </div>
     <div class="db__cell">
@@ -303,7 +308,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#smartphone" />
+                    <use xlink:href="#smartphone"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -317,7 +322,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#laptop" />
+                    <use xlink:href="#laptop"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -331,7 +336,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#pants" />
+                    <use xlink:href="#pants"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -345,7 +350,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#shirt" />
+                    <use xlink:href="#shirt"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -359,7 +364,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#monitor" />
+                    <use xlink:href="#monitor"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -373,7 +378,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#tablet" />
+                    <use xlink:href="#tablet"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -387,7 +392,7 @@ echo '<a href="logout.php">Log Out</a>';
         <div class="db__order">
             <div class="db__order-cat">
                 <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">
-                    <use xlink:href="#hat" />
+                    <use xlink:href="#hat"/>
                 </svg>
             </div>
             <div class="db__order-name">
@@ -399,7 +404,7 @@ echo '<a href="logout.php">Log Out</a>';
             <div><strong>$224.99</strong></div>
         </div>
     </div>
-    </main>
+</main>
 
 </body>
 </html>
