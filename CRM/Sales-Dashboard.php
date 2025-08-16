@@ -40,29 +40,28 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $mysqli = new mysqli($configValues['CONFIG_DB_HOST'], $configValues['CONFIG_DB_USER'], $configValues['CONFIG_DB_PASS'], $configValues['CONFIG_DB_NAME']);
 
 $result = $mysqli->query("SELECT creationdate as created_at, amount as price, invoice_id as id, creationby as accesspoint FROM payment ORDER BY creationdate DESC LIMIT 7");
-$products = $mysqli->query("
-SELECT 
+$products = $mysqli->query("SELECT 
     bp.planName AS plan_name, 
     p.creationBy AS creation_by, 
     COUNT(DISTINCT rc.id) AS orders,
-    ROUND(AVG(p.amount),2)*COUNT(DISTINCT rc.id) AS revenue, 
-    ROUND(AVG(r.rating), 1) AS ratings
+    ROUND(AVG(p.amount),2) * COUNT(DISTINCT rc.id) AS revenue,
+    COALESCE(ROUND(AVG(r.rating), 1), 0) AS ratings
 FROM 
-    billing_plans bp 
+    billing_plans bp
+RIGHT JOIN 
+    radcheck rc ON bp.bp_id = rc.bp_id
 JOIN 
-    radcheck rc ON bp.bp_id = rc.bp_id 
-JOIN 
-    payment p ON rc.payment_id_fk = p.id 
-JOIN 
-    ratings r ON bp.bp_id = r.prod_id 
+    payment p ON rc.payment_id_fk = p.id
+LEFT JOIN 
+    ratings r ON bp.bp_id = r.prod_id   
 WHERE 
-    MONTH(p.creationdate) = MONTH(CURRENT_DATE()) AND 
-    YEAR(p.creationdate) = YEAR(CURRENT_DATE())
+    MONTH(p.creationdate) = MONTH(CURRENT_DATE()) 
+    AND YEAR(p.creationdate) = YEAR(CURRENT_DATE())
 GROUP BY 
-    bp.planName, p.creationBy 
+    bp.planName, p.creationBy
 ORDER BY 
-    orders, revenue, ratings 
-    DESC LIMIT 10;
+    orders DESC, revenue DESC, ratings DESC
+LIMIT 10;
   ");
 // Start output buffering to capture the HTML content
 ob_start();
@@ -267,7 +266,7 @@ ob_start();
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Best Selling Products</h2>
+        <h2 class="db__subheading">Best Selling Products in Last 7 Days</h2>
         <table class="db__product-table">
             <thead>
             <tr>
@@ -338,7 +337,7 @@ ob_start();
         ?>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Top Selling Categories</h2>
+        <h2 class="db__subheading">Top Selling Categories in Last 7 Days </h2>
         <div class="db__bubbles">
             <div class="db__bubble">
 				<span id="biggest" class="db__bubble-text">
@@ -356,7 +355,7 @@ ob_start();
         </div>
     </div>
     <div class="db__cell">
-        <h2 class="db__subheading">Recent Orders</h2>
+        <h2 class="db__subheading">Recent Orders in Last 7 Days</h2>
         <?php
         foreach($result as $row) {
             $id = $row["id"];
@@ -381,106 +380,6 @@ ob_start();
 HTML;
         };
         ?>
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#smartphone" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                iPhone 13<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$599.99</strong></div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#laptop" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                Macbook Air 2022<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$1199.99</strong></div>-->
-<!--        </div>-->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#pants" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                Denim #142 Light Blue<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$44.99</strong></div>-->
-<!--        </div>-->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#shirt" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                White Blouse<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$54.99</strong></div>-->
-<!--        </div>-->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#monitor" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                iMac 2022<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$1,699.99</strong></div>-->
-<!--        </div>-->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#tablet" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                iPad Air 5<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$549.99</strong></div>-->
-<!--        </div>-->
-<!--        <div class="db__order db__order-item">-->
-<!--            <div class="db__order-cat">-->
-<!--                <svg class="db__order-cat-icon" width="24px" height="24px" aria-hidden="true">-->
-<!--                    <use xlink:href="#hat" />-->
-<!--                </svg>-->
-<!--            </div>-->
-<!--            <div class="db__order-name">-->
-<!--                Fedora Hat<br>-->
-<!--                <small>-->
-<!--                    <time datetime="2022-05-07 18:49:00">May 7 at 6:49 PM</time>-->
-<!--                </small>-->
-<!--            </div>-->
-<!--            <div><strong>$224.99</strong></div>-->
-<!--        </div>-->
-
     </div>
 </main>
 <!-- partial -->
@@ -642,17 +541,17 @@ HTML;
 
                 if (i == 0){
                     document.querySelector("span[id='biggest'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-1").innerHTML = `${data[i]["planType"]} pkg`;
+                    document.querySelector("#category-1").innerHTML = `${data[i]["planCategory"]} pkg`;
 
                 }
                 else if (i == 1){
                     document.querySelector("span[id='bigger'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-2").innerHTML = `${data[i]["planType"]} pkg`;
+                    document.querySelector("#category-2").innerHTML = `${data[i]["planCategory"]} pkg`;
 
                 }
                 else if (i == 2){
                     document.querySelector("span[id='big'] strong[class='db__bubble-value']").innerText=`${data[i]["DAILY_ORDERS"]}`;
-                    document.querySelector("#category-3").innerHTML = `${data[i]["planType"]} pkg`;
+                    document.querySelector("#category-3").innerHTML = `${data[i]["planCategory"]} pkg`;
                 }
             }
 
@@ -830,8 +729,6 @@ HTML;
 
 
 </script>
-
-
 </body>
 </html>
 

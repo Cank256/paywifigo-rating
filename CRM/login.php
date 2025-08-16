@@ -34,7 +34,7 @@ if (isset($_SESSION['referer']))
         $username = $_POST['username'];
         $password = $_POST['password'];
         // Use prepared statement to prevent SQL injection
-        $sql = "SELECT hotspot_owner_id, username, password FROM Hotspot_Owners_Administrators WHERE username=?";
+        $sql = "SELECT hotspot_owner_id, username, password FROM hotspot_owners_administrators WHERE username=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -69,16 +69,16 @@ if (isset($_SESSION['referer']))
                 }
                 exit();
             } else {
-                echo "Invalid password. <a href='login.html'>Try again</a>";
+                echo "Invalid password. <a href='login.php'>Try again</a>";
             }
-        } else {
-            echo "User not found. <a href='register.html'>Register</a>";
+        }
+        else {
+            echo "User not found. <a href='register.php?username=$username'>Register</a>";
         }
 
-// Close connection
+        // Close connection
         $stmt->close();
         $conn->close();
-
 
 
     }

@@ -15,28 +15,28 @@ $daysalesquerycategory = "
 SELECT 
     ROUND(COALESCE(COUNT(payment.id), 0),2) AS DAILY_ORDERS,
     ROUND(COALESCE(SUM(payment.amount), 0.00),2) AS DAILY_SALES_ACCRUED,
-    billing_plans.planType
+    billing_plans.planCategory
 FROM billing_plans
 LEFT JOIN radcheck ON billing_plans.bp_id = radcheck.bp_id
 LEFT JOIN payment ON payment.id = radcheck.payment_id_fk
     AND payment.creationdate > CURDATE() - INTERVAL 1 DAY -- This ensures it starts from today at 00:00
     AND payment.creationdate < CURDATE() + INTERVAL 1 DAY -- This ensures it ends before tomorrow at 00:00
     -- AND payment.creationdate BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND  DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-GROUP BY billing_plans.planType
-ORDER BY billing_plans.planType;
+GROUP BY billing_plans.planCategory
+ORDER BY billing_plans.planCategory;
 ;
 ";
 $daysalesquerycategoryavg = "
 SELECT 
     ROUND(COALESCE(COUNT(payment.id)/7, 0.00),2) AS WEEK_AVG_DAILY_ORDERS,
     ROUND(COALESCE(AVG(payment.amount), 0.00),2) AS WEEK_AVG_SALES_AMOUNT,
-    billing_plans.planType
+    billing_plans.planCategory
 FROM billing_plans
 LEFT JOIN radcheck ON billing_plans.bp_id = radcheck.bp_id
 LEFT JOIN payment ON payment.id = radcheck.payment_id_fk
     AND payment.creationdate BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()
-GROUP BY billing_plans.planType
-ORDER BY billing_plans.planType;
+GROUP BY billing_plans.planCategory
+ORDER BY billing_plans.planCategory;
 ;
 ";
 # 1.1.1 establish a connection

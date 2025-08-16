@@ -35,7 +35,29 @@ ORDER BY
     orders, revenue, ratings 
     DESC LIMIT 10;
 ";
-
+$daysalesquerycategory = "SELECT 
+    bp.planName AS plan_name, 
+    p.creationBy AS creation_by, 
+    COUNT(DISTINCT rc.id) AS orders,
+    ROUND(AVG(p.amount),2) * COUNT(DISTINCT rc.id) AS revenue,
+    COALESCE(ROUND(AVG(r.rating), 1), 0) AS ratings
+FROM 
+    billing_plans bp
+RIGHT JOIN 
+    radcheck rc ON bp.bp_id = rc.bp_id
+JOIN 
+    payment p ON rc.payment_id_fk = p.id
+LEFT JOIN 
+    ratings r ON bp.bp_id = r.prod_id   
+WHERE 
+    MONTH(p.creationdate) = MONTH(CURRENT_DATE()) 
+    AND YEAR(p.creationdate) = YEAR(CURRENT_DATE())
+GROUP BY 
+    bp.planName, p.creationBy
+ORDER BY 
+    orders DESC, revenue DESC, ratings DESC
+LIMIT 10;
+";
 # 1.1.1 establish a connection
 try {
     $con = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);

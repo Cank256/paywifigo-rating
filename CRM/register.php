@@ -35,7 +35,7 @@ if ($_SERVER && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] 
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
 
 // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO Hotspot_Owners_Administrators (username, password) VALUES (?, ?)";
+        $sql = "INSERT INTO hotspot_owners_administrators (username, password) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $username, $password);
         if ($stmt->execute()) {
@@ -52,6 +52,18 @@ if ($_SERVER && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] 
         $stmt->close();
         $conn->close();
     }
+}
+else if($_SERVER["REQUEST_METHOD"] == "GET") {
+    //parse the query string to retrieve the query parameters
+    $currentQueryString = $_SERVER['QUERY_STRING'];
+    parse_str($currentQueryString, $queryParams);
+
+//    echo '<pre>';
+//    var_dump($queryParams);
+//    var_dump($queryParams['username']);
+//    echo '</pre>';
+    $username = $queryParams['username'] ?? null;
+
 }
 
 
@@ -86,7 +98,8 @@ if ($_SERVER && isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] 
                         <!--                    <form action="register.php" method="post">-->
                         <div class="form-group">
                             <label>Enter Contact</label>
-                            <input autocomplete="off" class="form-control" type="tel" id="phone" value="" name="username" style="display:block;width:100%" required>
+
+                            <input autocomplete="off" class="form-control" type="tel" id="phone" value="<?=isset($username) ? $username : ''?>" name="username" style="display:block;width:100%" required>
                             <!-- partial -->
                             <!--              <script src='https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.0/build/js/intlTelInput.js'>-->
                             <script src='assets/intlTelInput.js'>
